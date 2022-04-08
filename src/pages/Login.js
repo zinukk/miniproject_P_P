@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import LoginGrid from '../components/LoginGrid';
 
 const Login = (props) => {
+
+    const {history}= props;
     return (
         <>
             <LoginGrid is_bg>
@@ -11,10 +13,18 @@ const Login = (props) => {
                     <LoginBox>
                         <h2>로그인(LOGIN)</h2>
                         <div> 
-                            <input type="text" name="user_id" placeholder="아이디를 입력해주세요.🏝" />
-                            <input type="password" name="user_id" placeholder="비밀번호를 입력해주세요.🏝" />
-                            <LogBtn >Login</LogBtn>
-                            <Gogo>회원가입하러 가기 &gt;</Gogo>
+                            <form>
+                                <input type="text" name="user_id" id="user_id" placeholder="아이디를 입력해주세요.🏝" />
+                                <input type="password" name="user_pwd" id="user_pwd" autoComplete="on" placeholder="비밀번호를 입력해주세요.🏝" />
+                           </form>
+                            <LogBtn onClick={()=>{
+                                history.push('/home')
+                            }
+                            }>Login</LogBtn>
+                            <Gogo onClick={()=>{
+                                history.push('/signup')
+                            }
+                            }>회원가입하러 가기 &gt;</Gogo>
                         </div>
                         
                     </LoginBox>
@@ -57,9 +67,6 @@ const LoginBox=styled.div`
 }
      }
 
-     & label{
-        font-family:"Gugi";
-     }
 
      & > div{
          width:100%;
@@ -69,7 +76,10 @@ const LoginBox=styled.div`
          padding: 50px 0;
          text-align:center;
      }
-
+     & form{
+        display:flex;
+        flex-direction:column;
+     }
      &  input {
          margin:10px 0;
          height:65px;
@@ -89,11 +99,18 @@ const LogBtn=styled.button`
          margin:30px 0;
          padding:20px;
          font-family:"Gugi";
+
+         &:hover{
+            border:1px solid #E7F6FD;
+            background:#E7F6FD;
+            color:#6F9FBE;
+         }
 `;
 
 const Gogo=styled.button`
     background:none;
     border:none;
+
 `;
 
 

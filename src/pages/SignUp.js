@@ -3,22 +3,33 @@ import styled from 'styled-components';
 import LoginGrid from '../components/LoginGrid';
 
 const SignUp = (props) => {
+
+    const {history}= props;
     return (
         <>
 
             <LoginGrid is_bg>
-                <Back> &lt; BACK</Back>
+                <Back onClick={()=>{
+                                history.push('/')
+                            }
+                            }> &lt; BACK</Back>
 
                 <LoginGrid width="700px">
                     <SignBox>
                         <h2>회원가입(SIGN UP)</h2>
-                        <div> 
-                            <input type="text" name="user_id" placeholder="아이디를 입력해주세요.🏝" />
-                            <input type="text" name="user_name" placeholder="닉네임은 2글자 이상 6글자 이하로 입력해주세요.🏝" />
-                            <input type="password" name="user_pwd" placeholder="비밀번호를 입력해주세요.🏝" />
-                            <input type="password" name="user_pwdCheck" placeholder="비밀번호를 다시 입력해주세요.🏝" />
+                        <SingInputBox> 
+                            <form>
+                                <div>
+                                    <input type="text" name="user_id" placeholder="아이디를 입력해주세요.🏝" />
+                                    <CheckBtn>중복확인</CheckBtn>
+                                </div>
+
+                                <input type="text" name="user_name" placeholder="닉네임은 2글자 이상 6글자 이하로 입력해주세요.🏝" />
+                                <input type="password" name="user_pwd" autoComplete="on"  placeholder="비밀번호를 입력해주세요.🏝" />
+                                <input type="password" name="user_pwdCheck" autoComplete="on"  placeholder="비밀번호를 다시 입력해주세요.🏝" />
+                            </form>
                             <LogBtn >Sgin up</LogBtn>
-                        </div>
+                        </SingInputBox>
                         
                     </SignBox>
                 </LoginGrid>
@@ -58,20 +69,16 @@ const SignBox=styled.div`
 }
      }
 
-     & label{
-        font-family:"Gugi";
-     }
-
-     & > div{
-         width:100%;
-         height:100%;
+     & form{
          display:flex;
          flex-direction:column;
-         padding: 50px 0;
-         text-align:center;
+     }
+     & form div{
+         position:relative;
      }
 
      &  input {
+         width:100%;
          margin:10px 0;
          height:65px;
          text-indent:10px;
@@ -82,6 +89,32 @@ const SignBox=styled.div`
          cursor:pointer;
      }
 `;
+const CheckBtn=styled.button`
+        position: absolute;
+         right:0;
+         top:10px;
+         width:150px;
+         height:65px;
+         background:#A6C4DC;
+         border:none;
+         border-radius:8px;
+         color:#fff;
+
+         &:hover{
+            border:1px solid #E7F6FD;
+            background:#E7F6FD;
+            color:#6F9FBE;
+         }
+`;
+const SingInputBox=styled.div`
+        width:100%;
+         height:100%;
+         display:flex;
+         flex-direction:column;
+         padding: 50px 0;
+         text-align:center;
+`;
+
 const LogBtn=styled.button`
         background:#A6C4DC;
          border:none;
@@ -90,6 +123,11 @@ const LogBtn=styled.button`
          margin:30px 0;
          padding:20px;
          font-family:"Gugi";
+         &:hover{
+            border:1px solid #E7F6FD;
+            background:#E7F6FD;
+            color:#6F9FBE;
+         }
 `;
 
 
