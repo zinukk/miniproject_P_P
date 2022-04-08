@@ -10,9 +10,9 @@ import { Route,Switch } from "react-router-dom";
 function App() {
   return (
     <React.Fragment>
-      <Route path='/login' exact component={Login}/>
+      <Route path='/' exact component={Login}/>
       <Route path='/signup' exact component={SignUp}/>
-      <Route path='/' exact component={Home}/>
+      <Route path='/home' exact component={Home}/>
       <Route path='/detail' exact component={Detail}/>
       <Route path='/write' exact component={Write}/>
     </React.Fragment>

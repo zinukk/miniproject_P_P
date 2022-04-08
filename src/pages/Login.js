@@ -45,6 +45,10 @@ const LoginBox=styled.div`
     border-radius:20px;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 
+    @media screen and (max-width: 700px){
+        padding: 30px 50px;
+}
+
      & > h2{
         font-family:"Gugi";
         text-align:center;
