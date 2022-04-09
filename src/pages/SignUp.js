@@ -1,8 +1,69 @@
-import React from 'react';
+import React,{useState} from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import LoginGrid from '../components/LoginGrid';
 
+import { actionCreators as userActions } from '../redux/modules/user';
+
+//중복확인 유효성 체크
+import {userIdCheck,checkName,checkPassword,checkEmail} from "../shared/signupCheck";
+
 const SignUp = (props) => {
+    const dispatch=useDispatch();
+
+    const [userId,setUserId]=useState('');
+   // const [checkuserId, setCheckuserId] = useState(false);
+    const [nickname,setNickname]=useState('');
+    const [email,setEmail]=useState('');
+    const [password,setPassword]=useState('');
+    const [passwordCheck,setPasswordCheck]=useState('');
+
+    // const onClickUserIdCheck=()=>{
+    //     if(!userIdCheck(userId)){
+    //         alert('아이디는 대,소문자 숫자로 이루어진 4~8자여야 합니다.🥲');
+    //     }
+    //     return;
+    // }
+
+    const signup=()=>{
+        if(
+            userId==="" ||
+            nickname===""||
+            email==="" ||
+            password==="" ||
+            passwordCheck===""
+        ){
+            window.alert('아이디, 닉네임, 이메일, 비밀번호 모두 입력해주세요.🤔');
+            return;
+        }
+        if (!checkName(nickname)) {
+            window.alert("닉네임: 2글자 이상 6글자 이하로 입력해주세요 🥸");
+            return;
+          }
+          if(!checkPassword(password)){
+            window.alert('비밀번호는 특수문자 영문, 숫자 포함, 최소 8자 이상이어야 합니다.');
+            return;
+        }
+        if(!userIdCheck(userId)){
+            window.alert('아이디는 영문, 숫자로 이루어진 4~8자여야 합니다.🥲');
+            return;
+        }
+        if(!checkEmail(email)){
+            window.alert('이메일 형식이 아닙니다.🥲');
+            return;
+        }
+        if (password !== passwordCheck) {
+            alert("비밀번호가 다릅니다.");
+            return;
+          }
+        
+        //   dispatch(userActions.getUser(email, nickname,userId, password, passwordCheck));
+        dispatch(userActions.getUser(userId));
+
+        
+    }; //sign
+
+ 
 
     const {history}= props;
     return (
@@ -20,15 +81,31 @@ const SignUp = (props) => {
                         <SingInputBox> 
                             <form>
                                 <div>
-                                    <input type="text" name="user_id" placeholder="아이디를 입력해주세요.🏝" />
-                                    <CheckBtn>중복확인</CheckBtn>
+                                    <input type="text" name="userId" onChange={(e)=>{
+                                        setUserId(e.target.value);
+                                    }}
+                                    placeholder="아이디는 영문, 숫자로 이루어진 4~8자로 입력해주세요.🏝" />
+                                    {/* <CheckBtn onClick={onClickUserIdCheck}>중복확인</CheckBtn> */}
                                 </div>
 
-                                <input type="text" name="user_name" placeholder="닉네임은 2글자 이상 6글자 이하로 입력해주세요.🏝" />
-                                <input type="password" name="user_pwd" autoComplete="on"  placeholder="비밀번호를 입력해주세요.🏝" />
-                                <input type="password" name="user_pwdCheck" autoComplete="on"  placeholder="비밀번호를 다시 입력해주세요.🏝" />
+                                <input type="text" name="nickname" onChange={(e)=>{
+                                        setNickname(e.target.value);
+                                    }}
+                                placeholder="닉네임은 2글자 이상 6글자 이하로 입력해주세요.🏝" />
+                                <input type="text" name="email" onChange={(e)=>{
+                                        setEmail(e.target.value);
+                                    }}
+                                placeholder="이메일을 입력해주세요.🏝" />
+                                <input type="password" name="password" autoComplete="off" onChange={(e)=>{
+                                        setPassword(e.target.value);
+                                    }}
+                                 placeholder="비밀번호는 특수문자 영문, 숫자 포함, 최소 8자 이상이어야 합니다.🏝" />
+                                <input type="password" name="passwordCheck" autoComplete="off"  onChange={(e)=>{
+                                        setPasswordCheck(e.target.value);
+                                    }}
+                                placeholder="비밀번호를 다시 입력해주세요.🏝" />
                             </form>
-                            <LogBtn >Sgin up</LogBtn>
+                            <LogBtn onClick={signup}>Sign up</LogBtn>
                         </SingInputBox>
                         
                     </SignBox>
@@ -93,7 +170,7 @@ const CheckBtn=styled.button`
         position: absolute;
          right:0;
          top:10px;
-         width:150px;
+         width:80px;
          height:65px;
          background:#A6C4DC;
          border:none;

@@ -64,14 +64,16 @@ const loginDB = (email, pwd) => {
   };
 };
 
-const signupDB = (email, userName, pwd) => {
+const signupDB = (email, nickname,userId, password, passwordCheck) => {
   return function (dispatch, getState, { history }) {
     //api
-    // const user = {
-    //   email: email,
-    //   nickname: userName,
-    //   password: pwd,
-    // };
+        const user ={
+            userId: userId,
+            nickname: nickname,
+            password: password,
+            passwordCheck: passwordCheck,
+            email: email
+        }
    
     // apis
     //   .signUp(user)
@@ -119,10 +121,9 @@ export default handleActions(
   {
     [SET_USER]: (state, action) =>
       produce(state, (draft) => {
-        // setCookie("is_login", "SUCCESS");
-        // draft.user = action.payload.user;
-        // console.log(state.user)
-        // draft.is_login = true;
+        setCookie("is_login", "SUCCESS");
+        draft.user = action.payload.user;
+        draft.is_login = true;
       }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
@@ -149,6 +150,7 @@ const actionCreators = {
   loginDB,
   loginCheckDB,
   logoutDB,
+  setUser,
 };
 
 export { actionCreators };
