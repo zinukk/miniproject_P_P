@@ -10,10 +10,7 @@ const Home = () => {
     const data = RESP
 
     console.log(data);
-
-    const history = useHistory()
     
-
     return (
         <div>
             <Header></Header>

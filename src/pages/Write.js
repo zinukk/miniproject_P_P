@@ -2,6 +2,8 @@ import React from 'react';
 import Header from '../components/Header';
 import styled from 'styled-components'
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { actionCreators as userActions } from '../redux/modules/user';
 
 const Write = () => {
     const [title, setTitle] = useState('');
@@ -10,8 +12,10 @@ const Write = () => {
     const [imageUrl, setimageUrl] = useState('');
     const [content, setContent] = useState('');
 
-    const sendData = ()=>{
+    const dispatch = useDispatch();
 
+    const sendWriteDataDB = ()=>{
+        
     }
 
     const encodeFileToBase64 = (fileBlob) => { 
@@ -62,7 +66,7 @@ const Write = () => {
                         }} /> <br/>
 
                         <DataButton onClick={()=>{
-                            sendData()
+                            sendWriteDataDB();
                         }} >
                             저장하기
                         </DataButton>
