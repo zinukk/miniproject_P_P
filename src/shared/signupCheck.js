@@ -1,7 +1,8 @@
 //아이디 체크
 export const userIdCheck = (userId) => {
-    //대문자,소문자,숫자로 이루어진 4~8자
-    let regExp = /^[a-zA-Z0-9]{4,8}$/;
+    //대문자,소문자,숫자로만 입력
+    //let regExp = /^[a-zA-Z0-9]{4,8}$/;
+    let regExp = /[a-zA-Z0-9]/;
     // 대문자 포함
     return regExp.test(userId);
   };
@@ -11,7 +12,7 @@ export const checkEmail = (email) => {
     return regEmail.test(email);
   };
   
-  // 사용자 이름 체크
+  // 사용자 이름 체크 2자-6자이하
   export const checkName = (nickname) => {
     var regName = /^.{2,6}$/;
     return regName.test(nickname);
@@ -21,6 +22,6 @@ export const checkEmail = (email) => {
     // 특수문자 영문, 숫자 포함, 최소 8자 이상이어야 합니다.
     // var regExp = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^\\w\\s]).{8,25}$/;
     let regPassword =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{4,}$/;
     return regPassword.test(password);
   };

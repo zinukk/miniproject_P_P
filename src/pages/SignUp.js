@@ -45,7 +45,7 @@ const SignUp = (props) => {
             return;
         }
         if(!userIdCheck(userId)){
-            window.alert('아이디는 영문, 숫자로 이루어진 4~8자여야 합니다.🥲');
+            window.alert('아이디는 영문, 숫자로만 입력해주세요.🥲');
             return;
         }
         if(!checkEmail(email)){
@@ -84,7 +84,7 @@ const SignUp = (props) => {
                                     <input type="text" name="userId" onChange={(e)=>{
                                         setUserId(e.target.value);
                                     }}
-                                    placeholder="아이디는 영문, 숫자로 이루어진 4~8자로 입력해주세요.🏝" />
+                                    placeholder="아이디는 영문, 숫자로만 입력해주세요.🏝" />
                                     {/* <CheckBtn onClick={onClickUserIdCheck}>중복확인</CheckBtn> */}
                                 </div>
 
