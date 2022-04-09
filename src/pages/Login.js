@@ -1,15 +1,40 @@
-import React from 'react';
+import React,{useState} from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 //그리드 컴포넌트
 import LoginGrid from '../components/LoginGrid';
 //리덕스 히스토리
 import {history} from "../redux/configStore";
+import { setCookie } from '../shared/Cookie';
+//아이디 유효성 검사
+import {userIdCheck} from "../shared/signupCheck";
 //액션크리에이터
 
 const Login = (props) => {
-    const login=(e)=>{
-        console.log(e.target.value);
-    }
+    const dispatch=useDispatch();
+
+    const [userId,setUserId]=useState('');
+    const [password,setPassword]=useState('');
+
+    const login = () => {
+        // if(userId===""){
+        //     window.alert('아이디를 입력해주시죠?🥲');
+        //     return;
+        // };
+        // if(password===""){
+        //     window.alert('비밀번호를 입력해주시죠?🥲');
+        //     return;
+        // };
+        
+        // if(!userIdCheck(userId)){
+        //     window.alert('아이디는 영문, 숫자로만 입력해주세요.🥲');
+        //     return;
+        // }
+        //헤더분기 테스트
+        setCookie('userId',"uu",2)
+        setCookie('password',"1234",2)
+        history.push('/')
+      };
 
     return (
         <>
@@ -20,12 +45,15 @@ const Login = (props) => {
                         <h2>로그인(LOGIN)</h2>
                         <div> 
                             <form>
-                                <input type="text" name="user_id" id="user_id" placeholder="아이디를 입력해주세요.🏝" onChange={login} />
-                                <input type="password" name="user_pwd" id="user_pwd" autoComplete="on" placeholder="비밀번호를 입력해주세요.🏝" />
+                                <input type="text" name="user_id" id="user_id" placeholder="아이디를 입력해주세요.🏝" onChange={(e)=>{
+                                    setUserId(e.target.value);
+                                }} />
+                                <input type="password" name="user_pwd" id="user_pwd" autoComplete="on" onChange={(e)=>{
+                                    setPassword(e.target.value);
+                                }}
+                                placeholder="비밀번호를 입력해주세요.🏝" />
                            </form>
-                            <LogBtn onClick={()=>{
-                                
-                            }}>Login</LogBtn>
+                            <LogBtn onClick={login}>Login</LogBtn>
                             <Gogo onClick={()=>{
                                 history.push('/signup')
                             }

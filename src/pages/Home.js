@@ -31,7 +31,7 @@ const Home = () => {
 
                 <PostBox>
                     {data.lists.map((cur, idx) =>(
-                        <Posts key={cur.idx} >
+                        <Posts key={idx} >
                                 <ImgBox src={cur.imageUrl}/>
                                 <TextBox>
                                     <GoMegaphone/>

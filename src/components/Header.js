@@ -2,23 +2,38 @@ import React from 'react';
 import styled from 'styled-components';
 import {history} from "../redux/configStore";
 
+import { getCookie,deleteCookie } from '../shared/Cookie';
+
 
 const Header = (props) => {
 
-    const is_login = false;
-    const is_session = false;
+    const [is_login, setIsLogin] =React.useState(false);
+    
+    React.useEffect(()=>{
+        let cookie =getCookie('userId');
+        console.log(cookie)
 
-    if(is_login == true && is_session == true){
+        if(cookie){
+            setIsLogin(true);
+        }else{
+            setIsLogin(false);
+        }
+    }, [])
+
+    if(is_login === true){
         return (
             <React.Fragment>
                 <HeaderBox>
                     <HeaderLogo onClick={()=>{
-                                    history.push('/home')
+                                    history.push('/')
                                 }
                                 }>🏝P_P🏝</HeaderLogo>
                     <FlexDiv>
                         <HeaderUserButton>@@@님, 안녕하세요!</HeaderUserButton>
-                        <HeaderButton>Logout</HeaderButton>
+                        <HeaderButton onClick={()=>{
+                            deleteCookie('userId');
+                        }}
+                        >Logout</HeaderButton>
                     </FlexDiv>
                 </HeaderBox>
             </React.Fragment>
@@ -32,8 +47,12 @@ const Header = (props) => {
                                 }
                                 }>🏝P_P🏝</HeaderLogo>
                     <FlexDiv>
-                        <HeaderButton>Login</HeaderButton>
-                        <HeaderButton>Sign Up</HeaderButton>
+                        <HeaderButton onClick={()=>{
+                            history.push('/login')
+                        }}>Login</HeaderButton>
+                        <HeaderButton onClick={()=>{
+                            history.push('/signup')
+                        }}>Sign Up</HeaderButton>
                     </FlexDiv>
                 </HeaderBox>
             </React.Fragment>
@@ -66,6 +85,7 @@ const HeaderButton = styled.button`
     background: white;
     border-radius: 5px;
     margin-right: 40px;
+    cursor:pointer;
 `
 const HeaderLogo = styled.h1`
     font-size: 25px;
