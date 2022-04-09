@@ -1,10 +1,12 @@
 import React from 'react';
+import Header from '../components/Header';
+import styled from 'styled-components';
 
-const Detail = () => {
+const Detail = (props) => {
     return (
-        <div>
-            세부페이지입니다!
-        </div>
+            <Header />
+            
+            
     );
 };
 
