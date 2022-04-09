@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import LoginGrid from '../components/LoginGrid';
 
 const Login = (props) => {
+    const login=(e)=>{
+        console.log(e.target.value);
+    }
 
     const {history}= props;
     return (
@@ -14,7 +17,7 @@ const Login = (props) => {
                         <h2>로그인(LOGIN)</h2>
                         <div> 
                             <form>
-                                <input type="text" name="user_id" id="user_id" placeholder="아이디를 입력해주세요.🏝" />
+                                <input type="text" name="user_id" id="user_id" placeholder="아이디를 입력해주세요.🏝" onChange={login} />
                                 <input type="password" name="user_pwd" id="user_pwd" autoComplete="on" placeholder="비밀번호를 입력해주세요.🏝" />
                            </form>
                             <LogBtn onClick={()=>{
