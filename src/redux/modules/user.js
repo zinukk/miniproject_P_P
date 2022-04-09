@@ -2,8 +2,7 @@ import { createAction, handleAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 
 import { deleteCookie, getCookie, setCookie } from "../../shared/Cookie";
-import axios from "axios";
-//import instance from "../../axios"
+
 
 // 액션
 const LOG_OUT = "LOG_OUT";
@@ -16,7 +15,7 @@ const getUser = createAction(GET_USER, (user) => ({ user }));
 const setUser = createAction(SET_USER, (user) => ({ user }));
 
 // 초기값
-const initialStat = {
+const initialState = {
   user: {
     userId:null,
     email:null,
@@ -142,7 +141,7 @@ export default handleActions(
         // draft.is_login = true;
       }),
   },
-  initialStat
+  initialState
 );
 
 const actionCreators = {
