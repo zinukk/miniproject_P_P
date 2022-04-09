@@ -24,6 +24,19 @@ const initialStat = {
   },
   is_login: false,
 };
+//미들웨어
+const sendWriteDataDB = (title, location, imageUrl, content) => {
+  return function (params) {
+    axios.post('',{
+      title : title,
+      content : content,
+      location : location,
+      imageUrl : imageUrl,
+    })
+
+    
+  }
+}
 
 const loginDB = (userId, password) => {
   return function (dispatch, getState, { history }) {

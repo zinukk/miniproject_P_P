@@ -10,10 +10,7 @@ const Home = () => {
     const data = RESP
 
     console.log(data);
-
-    const history = useHistory()
     
-
     return (
         <div>
             <Header></Header>
@@ -31,7 +28,7 @@ const Home = () => {
 
                 <PostBox>
                     {data.lists.map((cur, idx) =>(
-                        <Posts key={cur.idx} >
+                        <Posts key={idx} >
                                 <ImgBox src={cur.imageUrl}/>
                                 <TextBox>
                                     <GoMegaphone/>

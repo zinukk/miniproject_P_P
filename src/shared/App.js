@@ -13,9 +13,9 @@ function App() {
   return (
     <React.Fragment>
       <ConnectedRouter history={history}>
-        <Route path='/' exact component={Login}/>
+        <Route path='/login' exact component={Login}/>
         <Route path='/signup' exact component={SignUp}/>
-        <Route path='/home' exact component={Home}/>
+        <Route path='/' exact component={Home}/>
         <Route path='/detail' exact component={Detail}/>
         <Route path='/write' exact component={Write}/>
       </ConnectedRouter>
