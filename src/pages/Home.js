@@ -1,21 +1,53 @@
 import React from 'react';
 import Header from '../components/Header';
 import styled from 'styled-components'
+import { GoMilestone, GoMegaphone } from "react-icons/go"
+import { useHistory } from 'react-router-dom';
+import { RESP } from '../redux/modules/response';
 
 const Home = () => {
+
+    const data = RESP
+
+    console.log(data);
+
+    const history = useHistory()
+    
+
     return (
-        <React.Fragment>
+        <div>
             <Header></Header>
                 {/* <HomeImg src="image/tree.png" />
                 <HomeImgConvert src="image/tree.png" /> */}
-            <PostBox>
-                <PostInner>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </PostInner>
-            </PostBox>
-        </React.Fragment>
+            <HomeBody>
+                <FlexDiv>
+                    <WriteButton  >
+                        <CameraImg src="image/camera.png"/>
+                    </WriteButton>
+                    <HomeTextBox>
+                        당신만의 프라이빗한 장소를 올려주세요!
+                    </HomeTextBox>
+                </FlexDiv>
+
+                <PostBox>
+                    {data.lists.map((cur, idx) =>(
+                        <Posts key={cur.idx} >
+                                <ImgBox src={cur.imageUrl}/>
+                                <TextBox>
+                                    <GoMegaphone/>
+                                    <p style={{marginLeft:'10px', fontWeight:'600'}}>{cur.title}</p>
+                                </TextBox>
+                                <TextBox> 
+                                    <GoMilestone/>
+                                    <p style={{marginLeft:'10px', fontSize:'13px' }}>{cur.location}</p>
+                                </TextBox>
+                        </Posts>
+                            
+                    ))}
+                </PostBox>
+            </HomeBody>
+        </div>
+
     );
 };
 
@@ -23,6 +55,7 @@ const HomeImg = styled.img`
     width: 300px;
     position: fixed;
     bottom: 0px;
+    
 `
 const HomeImgConvert = styled.img`
     width: 300px;
@@ -42,52 +75,54 @@ const CameraImg = styled.img`
 const WriteButton = styled.button`
     background: none;
     border: none;
-    margin-right: 20px;
-`
-
-const Container = styled.div`
-    
 `
 const HomeTextBox = styled.div`
     font-size: 20px;
     border-left: 3px solid gray;
-    margin: auto 0px;
-    padding:  20px 10px;
+    margin: 30px auto;
+    padding:  20px 40px;
     align-items: center;
-    width: 500px;
+    width: fit-content;
+    test-align: center;
 `
 const FlexDiv = styled.div`
     width: 600px;
     display: flex;
-    margin: auto;
-    
+    margin: 0 auto;
+    margin-top: 150px;
 `
 const PostBox = styled.div`
-    width:100%;
-    min-height:1200px;
-    position:relative;
-    top:70px;
+    width: 1000px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-row-gap: 3em;
+    margin: 100px auto;
 `
-const PostInner=styled.div`
-    width:1200px;
-    margin:auto;
-    height:100%;
-    float:left;
-    @media screen and (max-width: 1200px){ width:100%; }
-
-    & > div{
-        width: 250px;
-        height: 250px;
-        background: slateblue;
-        float:left;
-        position:relative;
-    }
-`;
 const Posts = styled.div`
-    
+    width: 300px;
+    height: 300px;
+    background: white;
+    margin: auto;
+    border-radius: 5px;
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
 `
 const HomeBody = styled.div`
-    display: flex;
-    margin: 0 auto;
+    width: 1000px;
+    margin: 90px auto;
 `
+const ImgBox = styled.img`
+    width: 300px;
+    height: 200px;
+    margin: 0 auto;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+`
+const TextBox = styled.div`
+    display: flex;
+    width: fit-content;
+    height: 35px;
+    margin: 10px;
+    
+`
+
 export default Home;
