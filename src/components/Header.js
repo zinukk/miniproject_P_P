@@ -1,11 +1,16 @@
 import React from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
+import {history} from "../redux/configStore";
+
 
 const Header = (props) => {
     return (
         <React.Fragment>
             <HeaderBox>
-                <HeaderLogo>🏝P_P🏝</HeaderLogo>
+                <HeaderLogo onClick={()=>{
+                                history.push('/home')
+                            }
+                            }>🏝P_P🏝</HeaderLogo>
                 <FlexDiv>
                     <HeaderUserButton>@@@님, 안녕하세요!</HeaderUserButton>
                     <HeaderButton>Logout</HeaderButton>
@@ -43,6 +48,7 @@ const HeaderLogo = styled.h1`
     font-weight: bold;
     color: #6F7FBE;
     font-family:"Gugi";
+    cursor:pointer;
 `
 
 const HeaderUserButton = styled.button`

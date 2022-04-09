@@ -4,12 +4,13 @@ import styled from "styled-components";
 import { BsFillGeoAltFill,BsPencilSquare,BsFillTrashFill } from "react-icons/bs";
 
 const DeBtn =(props) =>{
-    const {width,margin,padding,bg,text,_onClick,children,is_edit,_disabled,is_del,is_loc} =props;
+    const {width,height,margin,padding,bg,text,_onClick,children,is_edit,_disabled,is_del,is_loc} =props;
     const styles={
         width:width,
         margin:margin,
         padding:padding,
         bg:bg,
+        height:height,
 
     }
     if(is_edit){
@@ -52,6 +53,7 @@ const DeBtn =(props) =>{
 DeBtn.defaultProps ={
     children:null,
     width:"100%",
+    height:"100%",
     margin:false,
     padding:false,
     bg: false,
@@ -62,15 +64,17 @@ DeBtn.defaultProps ={
 
 const ButtonBox = styled.button`
     width: ${(props) => props.width};
-    height:40px;
+    height: ${(props) => props.height};
     border:none;
     box-sizing:border-box;
     border-radius:8px;
     cursor:pointer;
     ${(props) => (props.margin ? `margin: ${props.margin};` : '')}
     ${(props) => (props.padding ? `padding: ${props.padding};` : '')}
-    background-color: ${(props) => (props.disabled ? "#A6C4DC" : "#52C856")};
+    background-color: ${(props) => (props.disabled ? "#E7F6FD" : "#E7F6FD")};
     color:#6F9FBE;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    @media screen and (max-width: 720px){ height:60px; }
 `;
 const EditBox=styled.button`
     background:none;

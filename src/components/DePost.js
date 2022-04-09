@@ -24,10 +24,14 @@ const DePost = (props) => {
                         <DeBtn is_del/>
                     </Grid>
                 </DeHeader>
-                    <DeImg shape="rectangle" src="https://velog.velcdn.com/images/ryurim0109/post/5432eec7-b7ea-4ca7-8315-e929e04c7a54/KakaoTalk_Photo_2022-04-09-10-15-54.jpeg"/>
+                <DeGrid>
+                    <DeImg shape="rectangle"
+                     src="https://velog.velcdn.com/images/ryurim0109/post/5432eec7-b7ea-4ca7-8315-e929e04c7a54/KakaoTalk_Photo_2022-04-09-10-15-54.jpeg"/>
+
                     <Desc>
-                        {content}
+                        <p>{content}</p>
                     </Desc>
+                </DeGrid>
             </Outter>
         </React.Fragment>
             
@@ -47,9 +51,11 @@ DePost.defaultProps={
 const Outter=styled.div`
     width:100%;
     position:relative;
+   
 
     & h1{
         text-align:center;
+        @media screen and (max-width: 720px){ font-size:24px; }
     }
 
 `;
@@ -69,18 +75,25 @@ const Grid=styled.div`
 
     & >p{
         padding:0 10px;
+        @media screen and (max-width: 720px){ font-size:16px; }
     }
+`;
+const DeGrid=styled.div`
+    width:auto;
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+    gap:10px;
+
+    @media screen and (max-width: 720px){ flex-direction:column; }
+
 `;
 const Desc =styled.div`
     width:100%;
-    height:200px;
-    margin-top:20px;
+    margin:20px 0;
     background:#fff;
-    border: 1px solid #C4C4C4;
-    border-radius: 20px;
     padding:20px;
     overflow:scroll;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     
 `;
 export default DePost;
