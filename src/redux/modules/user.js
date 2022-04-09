@@ -18,12 +18,14 @@ const setUser = createAction(SET_USER, (user) => ({ user }));
 // 초기값
 const initialStat = {
   user: {
-    userId:null
+    userId:null,
+    email:null,
+    nickname:null,
   },
   is_login: false,
 };
 
-const loginDB = (email, pwd) => {
+const loginDB = (userId, password) => {
   return function (dispatch, getState, { history }) {
     // 로그인 api
     // const user = {

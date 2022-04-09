@@ -37,17 +37,21 @@ const SignUp = (props) => {
             return;
         }
         if (!checkName(nickname)) {
-            window.alert("닉네임: 2글자 이상 6글자 이하로 입력해주세요 🥸");
+            window.alert("닉네임: 2글자 이상 6글자 이하로 입력해주세요. 🥸");
             return;
           }
           if(!checkPassword(password)){
-            window.alert('비밀번호는 특수문자 영문, 숫자 포함, 최소 8자 이상이어야 합니다.');
+            window.alert('비밀번호는 특수문자 영문, 숫자 포함, 최소 8자 이상이어야 합니다.🥸');
             return;
         }
         if(!userIdCheck(userId)){
             window.alert('아이디는 영문, 숫자로만 입력해주세요.🥲');
             return;
         }
+        if (password.includes(userId)) {
+            alert("비밀번호에 아이디가 포함되어 있습니다.🥲");
+            return;
+          }
         if(!checkEmail(email)){
             window.alert('이메일 형식이 아닙니다.🥲');
             return;
