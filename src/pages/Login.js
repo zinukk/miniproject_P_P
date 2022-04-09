@@ -1,13 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+//그리드 컴포넌트
 import LoginGrid from '../components/LoginGrid';
+//리덕스 히스토리
+import {history} from "../redux/configStore";
+//액션크리에이터
 
 const Login = (props) => {
     const login=(e)=>{
         console.log(e.target.value);
     }
 
-    const {history}= props;
     return (
         <>
             <LoginGrid is_bg>
@@ -20,10 +23,7 @@ const Login = (props) => {
                                 <input type="text" name="user_id" id="user_id" placeholder="아이디를 입력해주세요.🏝" onChange={login} />
                                 <input type="password" name="user_pwd" id="user_pwd" autoComplete="on" placeholder="비밀번호를 입력해주세요.🏝" />
                            </form>
-                            <LogBtn onClick={()=>{
-                                history.push('/home')
-                            }
-                            }>Login</LogBtn>
+                            <LogBtn>Login</LogBtn>
                             <Gogo onClick={()=>{
                                 history.push('/signup')
                             }
