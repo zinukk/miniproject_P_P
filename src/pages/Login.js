@@ -23,7 +23,9 @@ const Login = (props) => {
                                 <input type="text" name="user_id" id="user_id" placeholder="아이디를 입력해주세요.🏝" onChange={login} />
                                 <input type="password" name="user_pwd" id="user_pwd" autoComplete="on" placeholder="비밀번호를 입력해주세요.🏝" />
                            </form>
-                            <LogBtn>Login</LogBtn>
+                            <LogBtn onClick={()=>{
+                                
+                            }}>Login</LogBtn>
                             <Gogo onClick={()=>{
                                 history.push('/signup')
                             }

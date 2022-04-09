@@ -4,20 +4,44 @@ import {history} from "../redux/configStore";
 
 
 const Header = (props) => {
-    return (
-        <React.Fragment>
-            <HeaderBox>
-                <HeaderLogo onClick={()=>{
-                                history.push('/home')
-                            }
-                            }>🏝P_P🏝</HeaderLogo>
-                <FlexDiv>
-                    <HeaderUserButton>@@@님, 안녕하세요!</HeaderUserButton>
-                    <HeaderButton>Logout</HeaderButton>
-                </FlexDiv>
-            </HeaderBox>
-        </React.Fragment>
-    )
+
+    const is_login = false;
+    const is_session = false;
+
+    if(is_login == true && is_session == true){
+        return (
+            <React.Fragment>
+                <HeaderBox>
+                    <HeaderLogo onClick={()=>{
+                                    history.push('/home')
+                                }
+                                }>🏝P_P🏝</HeaderLogo>
+                    <FlexDiv>
+                        <HeaderUserButton>@@@님, 안녕하세요!</HeaderUserButton>
+                        <HeaderButton>Logout</HeaderButton>
+                    </FlexDiv>
+                </HeaderBox>
+            </React.Fragment>
+        )
+    }else{
+        return(
+            <React.Fragment>
+                <HeaderBox>
+                    <HeaderLogo onClick={()=>{
+                                    history.push('/home')
+                                }
+                                }>🏝P_P🏝</HeaderLogo>
+                    <FlexDiv>
+                        <HeaderButton>Login</HeaderButton>
+                        <HeaderButton>Sign Up</HeaderButton>
+                    </FlexDiv>
+                </HeaderBox>
+            </React.Fragment>
+        )
+
+    }
+
+
 };
 
 const HeaderBox = styled.div`

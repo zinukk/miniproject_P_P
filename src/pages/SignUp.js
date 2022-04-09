@@ -61,8 +61,7 @@ const SignUp = (props) => {
             return;
           }
         
-        //   dispatch(userActions.getUser(email, nickname,userId, password, passwordCheck));
-        dispatch(userActions.getUser(userId));
+        dispatch(userActions.signupDB(email, nickname, userId, password, passwordCheck));
 
         
     }; //sign
