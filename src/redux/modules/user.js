@@ -1,8 +1,7 @@
 import { createAction, handleAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-
+import { axios } from "axios";
 import { deleteCookie, getCookie, setCookie } from "../../shared/Cookie";
-
 
 // 액션
 const LOG_OUT = "LOG_OUT";
@@ -17,23 +16,12 @@ const setUser = createAction(SET_USER, (user) => ({ user }));
 // 초기값
 const initialState = {
   user: {
-    userId:null,
-    email:null,
-    nickname:null,
+    userId: null,
+    email: null,
+    nickname: null,
   },
   is_login: false,
 };
-//미들웨어
-// const sendWriteDataDB = (title, location, imageUrl, content) => {
-//   return function (params) {
-//     axios.post('',{
-//       title : title,
-//       content : content,
-//       location : location,
-//       imageUrl : imageUrl,
-//     })
-//   }
-// }
 
 const loginDB = (userId, password) => {
   return function (dispatch, getState, { history }) {
@@ -42,13 +30,11 @@ const loginDB = (userId, password) => {
     //   username: email,
     //   password: pwd,
     // };
-    
     // apis
     //   .login(user)
     // axios
     //   .post("http://3.36.100.253/user/login", user)
     //   .then((res) => {
-        
     //     const userId = res.data.userId;
     //     const email = res.data.email;
     //     const nickname = res.data.nickname;
@@ -66,7 +52,6 @@ const loginDB = (userId, password) => {
     //     dispatch(setUser(user));
     //     alert("정상적으로 로그인 되었습니다.");
     //     history.push('/')
-        
     //   })
     //   .catch((err) => {
     //     console.log(err);
@@ -76,17 +61,17 @@ const loginDB = (userId, password) => {
   };
 };
 
-const signupDB = (email, nickname,userId, password, passwordCheck) => {
+const signupDB = (email, nickname, userId, password, passwordCheck) => {
   return function (dispatch, getState, { history }) {
     //api
-        const user ={
-            userId: userId,
-            nickname: nickname,
-            password: password,
-            passwordCheck: passwordCheck,
-            email: email
-        }
-   
+    const user = {
+      userId: userId,
+      nickname: nickname,
+      password: password,
+      passwordCheck: passwordCheck,
+      email: email,
+    };
+
     // apis
     //   .signUp(user)
     // axios
@@ -112,7 +97,6 @@ const loginCheckDB = () => {
     //   userId: userId,
     // };
     // dispatch(setUser(user));
-    
   };
 };
 
