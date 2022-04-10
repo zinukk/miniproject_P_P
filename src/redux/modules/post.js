@@ -25,7 +25,6 @@ const sendWriteDataDB = (title, location, content, createdAt) => {
       })
       .then((res) => {
         console.log(res);
-        dispatch();
       })
       .catch((err) => console.log(err));
   };
@@ -44,6 +43,7 @@ export default handleActions(
 
 const actionCreators = {
   sendWriteDataDB,
+  addPost,
 };
 
 export { actionCreators };
