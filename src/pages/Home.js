@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 const Home = () => {
   const data = RESP;
 
-  const post_list = useSelector((state) => state.post.list);
+  const post_list = useSelector((state) => state.post.lists);
 
   console.log(post_list);
 
@@ -27,7 +27,7 @@ const Home = () => {
         </FlexDiv>
 
         <PostBox>
-          {post_list.map((cur, idx) => (
+          {post_list?.map((cur, idx) => (
             <Posts key={idx}>
               {/* <ImgBox src={cur.imageUrl} /> */}
               <TextBox>

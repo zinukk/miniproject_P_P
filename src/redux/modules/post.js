@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
+import { history } from "../configStore";
 
 // 액션
 const SET_POST = "SET_POST";
@@ -13,13 +14,11 @@ const DEL_POST = "DEL_POST";
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
 
 // 초기값
-const initialState = {
-  lists: [],
-};
+const initialState = {};
 
 // 미들웨어
 const sendWriteDataDB = (title, location, content, createdAt) => {
-  return function (dispatch, getState) {
+  return function (dispatch, getState, { history }) {
     axios
       .post("", {
         title: title,
@@ -27,9 +26,7 @@ const sendWriteDataDB = (title, location, content, createdAt) => {
         location: location,
         createdAt: createdAt,
       })
-      .then((res) => {
-        console.log(res);
-      })
+      .then(history.replace("/"))
       .catch((err) => console.log(err));
   };
 };

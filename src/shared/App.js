@@ -7,13 +7,10 @@ import Write from "../pages/Write";
 import { Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 
 function App() {
-  //const dispatch = useDispatch();
-  
-  //const is_session = sessionStorage.getItem("token") ? true : false;
   const dispatch = useDispatch();
 
   React.useEffect(() => {
