@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../components/Header";
 import styled from "styled-components";
 import { GoMilestone, GoMegaphone } from "react-icons/go";
-import { useHistory } from "react-router-dom";
+import { history } from "../redux/configStore";
 import { RESP } from "../redux/modules/response";
 import { useSelector } from "react-redux";
 
@@ -28,7 +28,12 @@ const Home = () => {
 
         <PostBox>
           {post_list?.map((cur, idx) => (
-            <Posts key={idx}>
+            <Posts
+              key={idx}
+              // onClick={() => {
+              //   history.push(`/detail/${cur.postId}`);
+              // }}
+            >
               {/* <ImgBox src={cur.imageUrl} /> */}
               <TextBox>
                 <GoMegaphone />
