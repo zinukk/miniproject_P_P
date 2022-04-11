@@ -2,6 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
 import { history } from "../configStore";
+import { apis } from "../../shared/api";
 
 // 액션
 const SET_POST = "SET_POST";
@@ -17,17 +18,26 @@ const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
 const initialState = {};
 
 // 미들웨어
-const sendWriteDataDB = (title, location, content, createdAt) => {
+const sendWriteDataDB = (
+  title,
+  location,
+  content,
+  createdAt,
+  file,
+  modifiedAt
+) => {
   return function (dispatch, getState, { history }) {
-    axios
-      .post("", {
-        title: title,
-        content: content,
-        location: location,
-        createdAt: createdAt,
+    apis
+      .addPost(title, location, content, createdAt, file, modifiedAt)
+      .then((res) => {
+        if (res.data === "게시글 작성이 완료되었습니다.") {
+          alert(res.data);
+          history.replace("/");
+        } else {
+          alert(res.data);
+        }
       })
-      .then(history.replace("/"))
-      .catch((err) => console.log(err));
+      .catch((e) => alert(e));
   };
 };
 

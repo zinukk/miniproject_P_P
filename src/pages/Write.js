@@ -5,20 +5,48 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 import moment from "moment";
+import axios from "axios";
 
 const Write = () => {
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [imageSrc, setImageSrc] = useState("");
-  const [imageUrl, setimageUrl] = useState("");
+  const [imageUrl, setimageUrl] = useState(null);
   const [content, setContent] = useState("");
 
+  console.log(imageUrl);
+
   const createdAt = moment().format("YYYY-MM-DD hh:mm:ss");
+  const modifiedAt = moment().format("YYYY-MM-DD hh:mm:ss");
 
   const dispatch = useDispatch();
 
-  const sendWriteDataDB = () => {
-    dispatch(userActions.sendWriteDataDB(title, location, content, createdAt));
+  const sendWriteDataDB = async (e) => {
+    e.preventDefault();
+
+    const file = new FormData();
+
+    file.append("file", imageUrl);
+
+    await axios({
+      method: "post",
+      url: "",
+      data: file,
+    })
+      // await apiMultiPart.addImg(file)
+      .then((res) => {
+        const file = res.data;
+        dispatch(
+          userActions.sendWriteDataDB(
+            title,
+            location,
+            content,
+            createdAt,
+            modifiedAt,
+            file
+          )
+        );
+      });
   };
 
   const encodeFileToBase64 = (fileBlob) => {
@@ -44,10 +72,10 @@ const Write = () => {
             <h2>사진을 업로드해주세요!</h2>
             <UploadFileInput
               type="file"
+              accept={"image/*"}
               onChange={(e) => {
                 encodeFileToBase64(e.target.files[0]);
-                setimageUrl(e.target.value);
-                console.log(imageUrl);
+                setimageUrl(e.target.files[0]);
               }}
             />
             <PreviewBox>
