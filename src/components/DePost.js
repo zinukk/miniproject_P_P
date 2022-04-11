@@ -25,16 +25,16 @@ const DePost = (props) => {
       <Outter>
         <div>
           {/* <h1>{title}</h1> */}
-          <h1>{one_post.title}</h1>
+          <h1>{one_post?.title}</h1>
         </div>
         <DeHeader>
           <Grid>
             <DeImg size="60" src={imageUrl} />
             {/* <DeImg size="60" src={one_post.imageUrl} /> */}
             {/* <p>{nickname}님</p> */}
-            <p>{one_post.nickname}님</p>
+            <p>{one_post?.nickname}님</p>
             {/* <p>{createdAt}</p> */}
-            <p>{one_post.createdAt}</p>
+            <p>{one_post?.createdAt}</p>
           </Grid>
           <Grid>
             <DeBtn is_loc />
@@ -50,7 +50,7 @@ const DePost = (props) => {
 
           <Desc>
             {/* <p>{content}</p> */}
-            <p>{one_post.content}</p>
+            <p>{one_post?.content}</p>
           </Desc>
         </DeGrid>
       </Outter>
