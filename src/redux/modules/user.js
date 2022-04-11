@@ -16,11 +16,10 @@ const setUser = createAction(SET_USER, (user) => ({ user }));
 
 // 초기값
 const initialState = {
-  user_info: {
-    userId: 'dfsdff',
-    email: 'db1234@naver.com',
-    nickname: '유짱',
-  },
+  
+  userId: 'dfsdff',
+  email: 'db1234@naver.com',
+  nickname: '유짱',
   is_login: false,
 };
 //미들웨어
@@ -67,10 +66,9 @@ const loginDB = (userId, password) => {
 const signupDB = (email, nickname, userId, password, passwordCheck) => {
   return function (dispatch, getState, { history }) {
     apis.signup(email, nickname, userId,password,passwordCheck).then(()=>{
-      window.alert('회원가입 완료!!');
-      dispatch(logincheckDB());
+      window.alert('회원가입 완료!!😇');
       history.replace('/login');
-  }).catch(err=>{console.log('err',err)})
+  }).catch(err=>{console.log('회원가입err',err)})
   };
 };
 
@@ -91,12 +89,12 @@ const logincheckDB = () => {
 // 토큰삭제
 const logoutDB = () => {
   return function (dispatch, getState, { history }) {
-    // dispatch(logOut());
-    // alert("로그아웃 되었습니다.");
-    // sessionStorage.removeItem("token");
-    // sessionStorage.removeItem("userId");
-    // history.push("/login");
-    // window.location.reload();
+    return async function (dispatch, getState, { history }) {
+      await deleteCookie("token");
+      localStorage.removeItem("username");
+      dispatch(logOut());
+      history.push("/login");
+    };
   };
 };
 
