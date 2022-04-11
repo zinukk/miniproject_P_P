@@ -10,6 +10,9 @@ import { history } from '../redux/configStore';
 
 
 function App() {
+  //const dispatch = useDispatch();
+  
+  //const is_session = sessionStorage.getItem("token") ? true : false;
   return (
     <React.Fragment>
       <ConnectedRouter history={history}>

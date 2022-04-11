@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// axios 인스턴스를 생성
 // const api = axios.create({
 //     baseURL: "http://15.165.160.58",
 //     headers: {
@@ -32,7 +33,7 @@ import axios from "axios";
 //     test: () => api.get("/"),
 
 
-   
+//인스타 클론코딩조 ..  
 // import axios from "axios";
 
 // const instance = axios.create({
