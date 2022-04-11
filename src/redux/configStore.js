@@ -4,12 +4,21 @@ import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 import post from "./modules/post";
 
-export const history = createBrowserHistory();
+import User from "./modules/user";
+// import Comment from "./modules/comment";
+// import Image  from "./modules/image";
+
+
+export const history =createBrowserHistory();
 
 const rootReducer = combineReducers({
-  router: connectRouter(history),
-  post: post,
-});
+    user: User,
+    post:post,
+    // image:Image,
+    // comment: Comment,
+    router:connectRouter(history),
+  });
+
 
 const middlewares = [thunk.withExtraArgument({ history: history })];
 

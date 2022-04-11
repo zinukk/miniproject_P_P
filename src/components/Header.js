@@ -32,6 +32,7 @@ const Header = (props) => {
                         <HeaderUserButton>@@@님, 안녕하세요!</HeaderUserButton>
                         <HeaderButton onClick={()=>{
                             deleteCookie('userId');
+                            history.replace('/login')
                         }}
                         >Logout</HeaderButton>
                     </FlexDiv>

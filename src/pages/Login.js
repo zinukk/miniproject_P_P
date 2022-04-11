@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 //그리드 컴포넌트
@@ -15,26 +15,35 @@ const Login = (props) => {
 
     const [userId,setUserId]=useState('');
     const [password,setPassword]=useState('');
+    //세션 체크
+    const is_session = sessionStorage.getItem("token");
 
     const login = () => {
-        // if(userId===""){
-        //     window.alert('아이디를 입력해주시죠?🥲');
-        //     return;
-        // };
-        // if(password===""){
-        //     window.alert('비밀번호를 입력해주시죠?🥲');
-        //     return;
-        // };
+        if(userId===""){
+            window.alert('아이디를 입력해주시죠?🥲');
+            return;
+        };
+        if(password===""){
+            window.alert('비밀번호를 입력해주시죠?🥲');
+            return;
+        };
         
-        // if(!userIdCheck(userId)){
-        //     window.alert('아이디는 영문, 숫자로만 입력해주세요.🥲');
-        //     return;
-        // }
-        //헤더분기 테스트
-        setCookie('userId',"uu",2)
-        setCookie('password',"1234",2)
-        history.push('/')
+        if(!userIdCheck(userId)){
+            window.alert('아이디는 영문, 숫자로만 입력해주세요.🥲');
+            return;
+        }
+        // //헤더분기 테스트
+        // setCookie('userId',"uu",2)
+        // setCookie('password',"1234",2)
+        // history.push('/')
+
       };
+      //세션이 있다면, 바로 메인페이지로 한번만 실행
+      useEffect(() => {
+        if (is_session) {
+          history.replace("/");
+        }
+      }, []);
 
     return (
         <>

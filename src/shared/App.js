@@ -11,6 +11,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 
 function App() {
+  //const dispatch = useDispatch();
+  
+  //const is_session = sessionStorage.getItem("token") ? true : false;
   const dispatch = useDispatch();
 
   React.useEffect(() => {
