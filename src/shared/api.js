@@ -14,15 +14,23 @@ const api = axios.create({
     },
 });
 
+const instance = axios.create({
+  baseURL: 'http://3.35.133.127',
+  headers: {
+      "content-type": "multipart/form-data",
+      accept: "application/json,",
+      Authorization : token,
+    },
+});
+
 
 
 export const apis = {
   test: () => api.get("/"),
 
-  //포스팅
   // 포스팅 추가
   addPost: (title, location, content, file, createdAt, modifiedAt) =>
-    api.post("/api/posts", {
+      instance.post("/api/posts", {
       title: title,
       content: content,
       imgUrl: file,
@@ -31,11 +39,11 @@ export const apis = {
       modifiedAt: modifiedAt,
     }),
 
-  //로그인//
+  //로그인
   login: (username, password) =>
-    api.post("/api/user/login", { username: username, password: password }),
+    api.post("/api/login", { username: username, password: password }),
   
-  // 회원가입용 요청 완성
+  // 회원가입용 요청
   signup: (userId,nickname,password,passwordCheck,email) => api.post('/api/signup',{
     userId:userId,
     nickname:nickname,
@@ -43,51 +51,49 @@ export const apis = {
     passwordCheck:passwordCheck,
     email:email
   }),
-
-  // 로그인 체크 완성
-  usercheck: () => api.post('/user/check'),
-
-  // 로그아웃 요청 완성
-  logout: ()=> api.post('/user/logout'),
+  // 로그아웃 요청 
+  //logout: ()=> api.post('/api/logout'),
+ 
   // 포스트 삭제
-  delPost: (id) => api.delete(`/api/posting/${id}`),
+  delPost: (postId) => api.delete(`/api/posts/${postId}`),
+
   // 포스트 수정
-  putPost: (id, username, title, content, file, categoryname) =>
-    api.put(`/api/posting/${id}`, {
-      username: username,
+  putPost: (title, location, content, file, createdAt, modifiedAt,postId) =>
+    api.put(`/api/posts/${postId}`, {
+      postId: postId,
       title: title,
       content: content,
       img: file,
-      categoryname: categoryname,
+      location: location,
+      modifiedAt:modifiedAt,
     }),
 
-  
+  // 게시글 삭제
+  deleting: (postId) => api.delete(`/api/posts/${postId}`),
+
+  // 댓글 조회 완성
+  // getcom: (post_id) => api.get(`/comments/${post_id}`,{}),
+
+  // 댓글 작성 
+  addcom: (postId, comment) => api.post(`/api/comments/${postId}`,{comment: comment}),
+
+  // 댓글 수정 
+  editcom: (commentId,comment) => api.put(`/comments/${commentId}`,{comment: comment}),
+
+  // 댓글 삭제 
+  delcom: (commentId) => api.delete(`/api/comments/${commentId}`,{}),      
+    
  
-  //댓글//
-  addComment: (id, username, commentcontent) =>
-    api.post(`/api/posting/${id}/comment`, {
-      username: username,
-      commentcontent: commentcontent,
-    }),
-  delComment: (id, commentId) =>
-    api.delete(`/api/posting/${id}/comment/${commentId}`),
-  editComment: (id, commentId, content) =>
-    api.put(`/api/posting/${id}/comment/${commentId}`, { content }),
+  // //참고댓글//
+  // addComment: (id, username, commentcontent) =>
+  //   api.post(`/api/posting/${id}/comment`, {
+  //     username: username,
+  //     commentcontent: commentcontent,
+  //   }),
+  // delComment: (id, commentId) =>
+  //   api.delete(`/api/posting/${id}/comment/${commentId}`),
 
-  // 회원가입 //
-  signup: (username, pw, pw_chk, email) => {
-    api.post("/api/user/signup", {
-      username: username,
-      password: pw,
-      passwordCheck: pw_chk,
-      email: email,
-    });
-  },
-  //아이디 중복확인//
-  checkUsername: (username) =>
-    api.post("/api/user/checkid", {
-      username: username,
-    }),
+
  
 
 };
