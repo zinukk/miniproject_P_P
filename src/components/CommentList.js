@@ -3,14 +3,31 @@ import styled from 'styled-components';
 import DeBtn from './DeBtn';
 import DeImg from './DeImg';
 
+import { useSelector } from 'react-redux';
+
 const CommentList = (props) => {
+    const comment_list = useSelector(state => state.comment.list);
+
     const {postId} =props;
+
+    React.useEffect(()=>{
+        if(!comment_list[postId]){
+          //dispatch(commentActions.getCommentFB(postId));
+        }
+      },[])
+      if(!comment_list[postId] || !postId){
+        return null;
+      }
+    
+    
+    
 
 
     return (
         <React.Fragment>
-                <CommentItem />
-                <CommentItem />
+                {comment_list[postId].map(c=>{
+          return  <CommentItem key={c.id} {...c}/>
+        })}
         </React.Fragment>
     );
 };

@@ -61,7 +61,7 @@ export const apis = {
       categoryname: categoryname,
     }),
 
-  // 메인페이지 카드 뷰
+  
  
   //댓글//
   addComment: (id, username, commentcontent) =>
