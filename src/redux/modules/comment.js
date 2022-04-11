@@ -2,6 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import {produce} from "immer";
 
 import moment from "moment";
+import axios from "axios";
 
 const ADD_COMMENT = "ADD_COMMENT";
 const SET_COMMENT = "SET_COMMENT";

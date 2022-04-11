@@ -2,8 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import DeBtn from './DeBtn';
 import CommentList from './CommentList';
+import { useDispatch,useSelector } from 'react-redux';
 
 const Comment = (props) => {
+    const dispatch =useDispatch();
+    const comment_list=useSelector(state => state.comment.list)
     return (
         <React.Fragment>
                 <Outter>

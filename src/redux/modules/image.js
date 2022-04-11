@@ -1,19 +1,18 @@
-
 import { createAction,handleActions } from "redux-actions";
 import {produce} from "immer";
 
 
 
 const UPLOADING = "UPLOADING";
-const UPLOAD_IMG ="UPLOAD_IMG";
+const UPLOAD_IMG ="UPLOAD_IMG"; //업로드 액션
 const SET_PRE ="SET_PRE";
 
 const uploading =createAction(UPLOADING,(uploading)=>({uploading}));
-const uploadImage =createAction(UPLOAD_IMG,(image_url)=>({image_url}));
+const uploadImage =createAction(UPLOAD_IMG,(imageUrl)=>({imageUrl}));
 const setPreview =createAction(SET_PRE,(preview)=>({preview}));
 
 const initialState={
-    image_url: '',
+    imageUrl: '',
     uploading:false,
     preview:null,
 }

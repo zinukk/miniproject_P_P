@@ -34,7 +34,6 @@ const CommentItem=(props)=>{
                 </ComPro>
                 <ComBox>
                     <div>
-                        <DeBtn is_edit/>
                         <DeBtn is_del/>
                     </div>
                     <p>{comments[0].comment}</p>
