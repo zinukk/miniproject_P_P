@@ -1,6 +1,7 @@
 import { createAction, handleAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import { axios } from "axios";
+import axios  from "axios";
+import {apis} from "../../shared/api";
 import { deleteCookie, getCookie, setCookie } from "../../shared/Cookie";
 
 // 액션
@@ -15,25 +16,16 @@ const setUser = createAction(SET_USER, (user) => ({ user }));
 
 // 초기값
 const initialState = {
-  user: {
-    userId: null,
-    email: null,
-    nickname: null,
+  user_info: {
+    userId: 'dfsdff',
+    email: 'db1234@naver.com',
+    nickname: '유짱',
   },
   is_login: false,
 };
 //미들웨어
-// const sendWriteDataDB = (title, location, imageUrl, content) => {
-//   return function (params) {
-//     axios.post('',{
-//       title : title,
-//       content : content,
-//       location : location,
-//       imageUrl : imageUrl,
-//     })
-//   }
-// }
 
+//로그인 
 const loginDB = (userId, password) => {
   return function (dispatch, getState, { history }) {
     // 로그인 api
@@ -71,33 +63,18 @@ const loginDB = (userId, password) => {
     //   });
   };
 };
-
+//회원가입 기능
 const signupDB = (email, nickname, userId, password, passwordCheck) => {
   return function (dispatch, getState, { history }) {
-    //api
-    const user = {
-      userId: userId,
-      nickname: nickname,
-      password: password,
-      passwordCheck: passwordCheck,
-      email: email,
-    };
-
-    // apis
-    //   .signUp(user)
-    // axios
-    //   .post("http://3.36.100.253/user/signup", user)
-    //   .then(() => {
-    //     window.alert("회원가입을 축하드립니다!");
-    //     history.push("/login");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    apis.signup(email, nickname, userId,password,passwordCheck).then(()=>{
+      window.alert('회원가입 완료!!');
+      dispatch(logincheckDB());
+      history.replace('/login');
+  }).catch(err=>{console.log('err',err)})
   };
 };
 
-const loginCheckDB = () => {
+const logincheckDB = () => {
   return function (dispatch, getState, { history }) {
     // const userId = sessionStorage.getItem("userId");
     // const nickname = sessionStorage.getItem("nickname");
@@ -155,7 +132,7 @@ const actionCreators = {
   getUser,
   signupDB,
   loginDB,
-  loginCheckDB,
+  logincheckDB,
   logoutDB,
   setUser,
 };
