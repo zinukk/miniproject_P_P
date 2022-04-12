@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import LoginGrid from '../components/LoginGrid';
 
 import { actionCreators as userActions } from '../redux/modules/user';
+import { apis } from '../shared/api';
 
 //중복확인 유효성 체크
 import {userIdCheck,checkName,checkPassword,checkEmail} from "../shared/signupCheck";
@@ -12,18 +13,32 @@ const SignUp = (props) => {
     const dispatch=useDispatch();
 
     const [userId,setUserId]=useState('');
-   // const [checkuserId, setCheckuserId] = useState(false);
+    const [checkUserId, setCheckUserId] = useState(false);
     const [nickname,setNickname]=useState('');
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
     const [passwordCheck,setPasswordCheck]=useState('');
 
-    // const onClickUserIdCheck=()=>{
-    //     if(!userIdCheck(userId)){
-    //         alert('아이디는 대,소문자 숫자로 이루어진 4~8자여야 합니다.🥲');
-    //     }
-    //     return;
-    // }
+    const onClickUserIdCheck=()=>{
+        if(!userIdCheck(userId)){
+            alert('아이디는 대,소문자 숫자로 이루어진 4~8자여야 합니다.🥲');
+            return;
+        }else{
+            apis
+            .checkUserId(userId)
+            .then((res)=>{
+               // window.alert(res.data);
+                window.alert('사용가능한 아이디 입니다~');
+                setCheckUserId(true);
+            })
+            .catch((err)=>{
+                //window.alert(err.data);
+                window.alert('중복된 아이디 입니다.');
+                setCheckUserId(false);
+            });
+        }
+        
+    }
 
     const signup=()=>{
         if(
@@ -88,7 +103,7 @@ const SignUp = (props) => {
                                         setUserId(e.target.value);
                                     }}
                                     placeholder="아이디는 영문, 숫자로만 입력해주세요.🏝" />
-                                    {/* <CheckBtn onClick={onClickUserIdCheck}>중복확인</CheckBtn> */}
+                                    <CheckBtn onClick={onClickUserIdCheck}>중복확인</CheckBtn>
                                 </div>
 
                                 <input type="text" name="nickname" onChange={(e)=>{

@@ -5,10 +5,11 @@ import styled from 'styled-components';
 import LoginGrid from '../components/LoginGrid';
 //리덕스 히스토리
 import {history} from "../redux/configStore";
-import { setCookie } from '../shared/Cookie';
+//import { setCookie } from '../shared/Cookie';
 //아이디 유효성 검사
 import {userIdCheck} from "../shared/signupCheck";
 //액션크리에이터
+import { actionCreators as userActions } from '../redux/modules/user';
 
 const Login = (props) => {
     const dispatch=useDispatch();
@@ -36,6 +37,7 @@ const Login = (props) => {
         // setCookie('userId',"uu",2)
         // setCookie('password',"1234",2)
         // history.push('/')
+        dispatch(userActions.loginDB(userId,password));
 
       };
       //세션이 있다면, 바로 메인페이지로 한번만 실행
