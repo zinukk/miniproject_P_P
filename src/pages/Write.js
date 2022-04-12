@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import moment from "moment";
 import axios from "axios";
+import { history } from "../redux/configStore";
 
 const Write = () => {
   const [title, setTitle] = useState("");
@@ -13,8 +14,6 @@ const Write = () => {
   const [imageSrc, setImageSrc] = useState("");
   const [imageUrl, setimageUrl] = useState(null);
   const [content, setContent] = useState("");
-
-  console.log(imageUrl);
 
   const createdAt = moment().format("YYYY-MM-DD hh:mm:ss");
   const modifiedAt = moment().format("YYYY-MM-DD hh:mm:ss");

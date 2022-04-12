@@ -45,14 +45,16 @@ const initialPost = {
 const sendWriteDataDB = (title, location, content, createdAt, modifiedAt) => {
   return function (dispatch, getState, { history }) {
     axios
-      .post("", {
+      .post("http://54.180.90.59:8080/api/posts", {
         title: title,
         location: location,
         content: content,
-        createdAt: createdAt,
-        modifiedAt: null,
       })
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        dispatch(setpostDB());
+        console.log(res.data);
+        history.push("/");
+      })
       .catch((err) => {
         console.log("err", err);
       });
@@ -62,7 +64,7 @@ const sendWriteDataDB = (title, location, content, createdAt, modifiedAt) => {
 const setpostDB = () => {
   return function (dispatch, getState, { history }) {
     axios
-      .get("https://jsonplaceholder.typicode.com/posts")
+      .get("http://54.180.90.59:8080/")
       .then((res) => {
         let post_list = res.data;
         dispatch(setPost(post_list));
