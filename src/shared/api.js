@@ -6,7 +6,7 @@ const token = tokenCheck.split('=')[1];
 
 // export default instance;
 const api = axios.create({
-  baseURL: 'http://3.35.133.127',
+  baseURL: 'http://54.180.90.59:8080',
   headers: {
       "content-type": "application/json;charset=UTF-8",
       accept: "application/json,",
@@ -15,7 +15,7 @@ const api = axios.create({
 });
 
 const instance = axios.create({
-  baseURL: 'http://3.35.133.127',
+  baseURL: 'http://54.180.90.59:8080',
   headers: {
       "content-type": "multipart/form-data",
       accept: "application/json,",

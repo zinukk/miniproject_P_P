@@ -56,10 +56,11 @@ const loginDB = (userId, password) => {
 //회원가입 기능
 const signupDB = (email, nickname, userId, password, passwordCheck) => {
   return function (dispatch, getState, { history }) {
-    apis.signup(email, nickname, userId,password,passwordCheck).then(()=>{
+    apis.signup(email, nickname, userId,password,passwordCheck).then((res)=>{
       window.alert('회원가입 완료!!😇');
       history.replace('/login');
-  }).catch(err=>{
+      console.log(res)
+  }).catch((err)=>{
     console.log('나는회원가입err다',err)
   });
   };
