@@ -8,11 +8,13 @@ import { deleteCookie, getCookie, setCookie } from "../../shared/Cookie";
 const LOG_OUT = "LOG_OUT";
 const GET_USER = "GET_USER";
 const SET_USER = "SET_USER";
+const CHECK_USER ="CHECK_USER";
 
 // 액션 크리에이터
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
 const getUser = createAction(GET_USER, (user) => ({ user }));
 const setUser = createAction(SET_USER, (user) => ({ user }));
+const checkUser = createAction(CHECK_USER, (userId) => ({ userId }));
 
 // 초기값
 const initialState = {
@@ -28,38 +30,27 @@ const initialState = {
 const loginDB = (userId, password) => {
   return function (dispatch, getState, { history }) {
     // 로그인 api
-    // const user = {
-    //   username: email,
-    //   password: pwd,
-    // };
-    // apis
-    //   .login(user)
-    // axios
-    //   .post("http://3.36.100.253/user/login", user)
-    //   .then((res) => {
-    //     const userId = res.data.userId;
-    //     const email = res.data.email;
-    //     const nickname = res.data.nickname;
-    //     const jwtToken = res.headers.authorization;
-    //     sessionStorage.setItem("token", jwtToken)
-    //     sessionStorage.setItem("userId", userId)
-    //     sessionStorage.setItem("nickname", nickname)
-    //     sessionStorage.setItem("email", email)
-    //     const user = {
-    //       email: email,
-    //       nickname: nickname,
-    //       userId: userId,
-    //     };
-    //     console.log(user)
-    //     dispatch(setUser(user));
-    //     alert("정상적으로 로그인 되었습니다.");
-    //     history.push('/')
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     window.alert("아이디 또는 비밀번호가 다릅니다.");
-    //     return;
-    //   });
+    apis
+    .login(userId, password)
+      .then((res) => {
+        setCookie("token", res.data[1].token, 5);
+        localStorage.setItem("userId", res.data[0].userId);
+        dispatch(setUser({ userId: userId }));
+        history.push('/');
+        window.alert(
+          `${localStorage.getItem("nickname")}님 안녕하세요!`,
+          "P_P에 방문해주셔서 감사합니다!",
+          "success"
+        );
+      })
+      .catch((err) => {
+        window.alert(
+          "아이디 혹은 비밀번호가 일치하지 않습니다",
+          "다시한번 입력해주세요!",
+          "error"
+        );
+        console.log(err, '나는 로그인 에러닷!!!')
+      });
   };
 };
 //회원가입 기능
@@ -68,30 +59,31 @@ const signupDB = (email, nickname, userId, password, passwordCheck) => {
     apis.signup(email, nickname, userId,password,passwordCheck).then(()=>{
       window.alert('회원가입 완료!!😇');
       history.replace('/login');
-  }).catch(err=>{console.log('회원가입err',err)})
+  }).catch(err=>{
+    console.log('나는회원가입err다',err)
+  });
   };
 };
 
+//로그인 여부 확인 기능
 const logincheckDB = () => {
   return function (dispatch, getState, { history }) {
-    // const userId = sessionStorage.getItem("userId");
-    // const nickname = sessionStorage.getItem("nickname");
-    // const email = sessionStorage.getItem("email");
-    // const user = {
-    //   email: email,
-    //   nickname: nickname,
-    //   userId: userId,
-    // };
-    // dispatch(setUser(user));
+    const userId = localStorage.getItem("userId");
+    const tokenCheck = document.cookie;
+    if (tokenCheck) {
+      dispatch(setUser({ userId: userId }));
+    } else {
+      dispatch(logOut());
+    }
   };
 };
 
-// 토큰삭제
+// 로그아웃토큰삭제
 const logoutDB = () => {
   return function (dispatch, getState, { history }) {
     return async function (dispatch, getState, { history }) {
       await deleteCookie("token");
-      localStorage.removeItem("username");
+      localStorage.removeItem("userId");
       dispatch(logOut());
       history.push("/login");
     };
@@ -109,17 +101,17 @@ export default handleActions(
       }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
-        // deleteCookie("is_login");
-        // sessionStorage.removeItem("token");
-        // sessionStorage.removeItem("useId");
-        // window.sessionStorage.clear();
-        // draft.user = null;
-        // draft.is_login = false;
+        deleteCookie("is_login");
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("useId");
+        window.sessionStorage.clear();
+        draft.user = null;
+        draft.is_login = false;
       }),
     [GET_USER]: (state, action) =>
       produce(state, (draft) => {
-        // draft.user = action.payload.user;
-        // draft.is_login = true;
+        draft.user = action.payload.user;
+        draft.is_login = true;
       }),
   },
   initialState
