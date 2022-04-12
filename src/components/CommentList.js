@@ -21,9 +21,11 @@ const CommentList = (props) => {
 
   return (
     <React.Fragment>
-      {comment_list[postId].map((c) => {
+      {/* {comment_list[postId].map((c) => {
         return <CommentItem key={c.id} {...c} />;
-      })}
+      })} */}
+      <CommentItem  />
+      <CommentItem  />
     </React.Fragment>
   );
 };
