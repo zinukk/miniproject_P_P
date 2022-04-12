@@ -3,7 +3,8 @@ import styled from "styled-components";
 import DeBtn from "./DeBtn";
 import DeImg from "./DeImg";
 
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { actionCreators as comActions } from "../redux/modules/comment";
 
 const CommentList = (props) => {
   const comment_list = useSelector((state) => state.comment.list);
@@ -35,22 +36,34 @@ CommentList.defaultProps = {
 };
 
 const CommentItem = (props) => {
-  const { comments, commentId, comment, createdAt } = props;
+  const dispatch =useDispatch();
+  const { commentId, comment, createdAt,nickname,imageUrl ,id, postId} = props;
+  let _user_nickname = useSelector(state => state.user.nickname);
+  
+  const is_me = nickname === _user_nickname? true: false;
+
+  const delCom = () => {
+    dispatch(comActions.delcommentDB(id,postId));
+} 
 
   return (
     <React.Fragment>
       <Grid>
-        <p>{comments[0].createdAt}</p>
+        <p>{createdAt}</p>
         <div>
           <ComPro>
-            <DeImg size="60" src={props.imageUrl} />
-            <p>누군구ㅜ님</p>
+            <DeImg size="60" src={imageUrl} />
+            <p>{nickname}</p>
           </ComPro>
           <ComBox>
+          {/* {is_me && 
             <div>
               <DeBtn is_del />
+            </div>} */}
+            <div>
+              <DeBtn is_del onClick={delCom}/>
             </div>
-            <p>{comments[0].comment}</p>
+            <p>{comment}</p>
           </ComBox>
         </div>
       </Grid>
@@ -58,18 +71,12 @@ const CommentItem = (props) => {
   );
 };
 CommentItem.defaultProps = {
-  comments: [
-    {
-      commentId: 1,
-      comment: "나도 반가워요",
-      createdAt: "2022-04-09 12:00:00", //LocalDateTime
-    },
-    {
-      commentId: 2,
-      comment: "거짓말이에요",
-      createdAt: "2022-04-09 12:00:00", //LocalDateTime
-    },
-  ],
+   
+    commentId: '5fas4f5',
+    nickname: '유쨩',
+    comment: '오잉 ? 별론데요?',
+    createdAt: '2022-04-11 11:00:02',
+    imageUrl:"https://velog.velcdn.com/images/ryurim0109/post/ece967a7-45f6-4479-b819-639a38063ca1/%E1%84%91%E1%85%B3%E1%84%85%E1%85%A9%E1%84%91%E1%85%B5%E1%86%AF.png",
 };
 
 const Grid = styled.div`
