@@ -77,15 +77,11 @@ export const apis = {
   deleting: (postId) => api.delete(`/api/posts/${postId}`),
 
   // 댓글 조회 완성
-  // getcom: (post_id) => api.get(`/comments/${post_id}`,{}),
+  getcom: (postId) => api.get(`/comments/${postId}`, {}),
 
   // 댓글 작성
   addcom: (postId, comment) =>
     api.post(`/api/comments/${postId}`, { comment: comment }),
-
-  // 댓글 수정
-  editcom: (commentId, comment) =>
-    api.put(`/comments/${commentId}`, { comment: comment }),
 
   // 댓글 삭제
   delcom: (commentId) => api.delete(`/api/comments/${commentId}`, {}),

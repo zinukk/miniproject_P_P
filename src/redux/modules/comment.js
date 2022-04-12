@@ -2,84 +2,76 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 
 import moment from "moment";
-import axios from "axios";
+import { apis } from "../../shared/api";
 
 const ADD_COMMENT = "ADD_COMMENT";
 const SET_COMMENT = "SET_COMMENT";
 const DELETE_COMMENT = "DELETE_COMMENT";
 
-const addComment = createAction(ADD_COMMENT, (comment_list) => ({
-  comment_list,
+const addComment = createAction(ADD_COMMENT, (comment,nickname) => ({
+  comment,nickname
 }));
-const setComment = createAction(SET_COMMENT, (comment_list) => ({
-  comment_list,
+const setComment = createAction(SET_COMMENT, (list) => ({
+  list,
 }));
-const deleteComment = createAction(DELETE_COMMENT, (commentId) => ({
-  commentId,
+const deleteComment = createAction(DELETE_COMMENT, (id) => ({
+  id,
 }));
 
 const initialState = {
-  list: [],
+  list: [
+    {   
+      commentId: '5fas4f5',
+      nickname: '유쨩',
+      comment: '오잉 ? 별론데요?',
+      createdAt: '2022-04-11 11:00:02',
+  },
+  {
+      commentId:'1ad6sg45',
+      nickname: '둘리',
+      comment: '전 괜찮던데요?',
+      createdAt: '2022-04-11 11:00:17',
+  },
+  {
+      commentId:'1dfh53z',
+      userId: '키키',
+      comment: '둘 다 싸우지 마세요',
+      createdAt: '2022-04-11 11:00:17',
+  },
+  ],
 };
-
-const addCommentDB = (comment) => {
-  return function (dispatch, getState, { history }) {
-    axios
-      .post("", {
-        comment: comment,
+//미들웨어
+const setcommentDB = (postId) => {
+  return function(dispatch, getState, {history}){
+      apis.getcom(postId)
+      .then(res=>{
+          dispatch(setComment(res.data))
       })
-      .then((res) => dispatch(addComment(res.data)))
-      .catch((e) => alert(e));
-
-    //   const TOKEN = sessionStorage.getItem("token");
-
-    //   instance.post(`/api/comments/${postId}`,{content},{ headers: {
-    //       "authorization" : `${TOKEN}`
-    //     }}).then((response)=>{
-
-    //         let comment_list = {...response.data};
-
-    //         dispatch(addComment(comment_list))
-
-    //   dispatch(postActions.newComment(parseInt(postId)));
-    //   // 코멘트의 숫자를 셀때는 post정보에 포함된 comments 배열의 길이로 숫자를 세서 화면에 표현하므로 post 리덕스의 상태도 수정해주어야 한다.
-
-    // })
-  };
-};
-
-const deleteCommentDB = (commentId) => {
+      .catch(err=>{
+          console.log('나는 댓글 불러오기 err',err)
+      })
+  }
+}
+const addCommentDB = (comment,postId) => {
   return function (dispatch, getState, { history }) {
-    //   const TOKEN = sessionStorage.getItem("token");
-    //   instance
-    //     .delete(`/api/comments/${commentId}`, {
-    //       headers: {
-    //         authorization: `${TOKEN}`,
-    //       },
-    //     })
-    //     .then((res) => {
-    //       dispatch(deleteComment(commentId));
-    //     })
-    //     .catch((err) => {
-    //       console.log("withdraw : 에.러", err);
-    //     });
+    apis.addcom(postId,comment)
+        .then(()=>{
+            dispatch(setcommentDB(postId));
+        })
+        .catch(err=>{console.log('나는 댓글작성 err',err)})    
   };
 };
 
-const getComment = (postId) => {
-  return function (dispatch, getState, { history }) {
-    //   const TOKEN = sessionStorage.getItem("token");
-    //   instance.get("/",{
-    //     headers: {
-    //       authorization: `${TOKEN}`,
-    //     }}).then((response) => {
-    //     // console.log(postId);
-    //     const _post = response.data.filter((list)=>list.postId===postId)
-    //     const comment_list= _post[0].commentList;
-    //     dispatch(setComment(comment_list));
-    //   });
-  };
-};
+const delcommentDB = (commentId,postId) => {
+  return function(dispatch,getState, {history}){
+      apis.delcom(commentId)
+      .then(()=>{
+          dispatch(setcommentDB(postId));
+      })
+      .catch(err=>{console.log('나는 댓글삭제err',err)})
+  }
+}
+
 export default handleActions(
   {
     [ADD_COMMENT]: (state, action) =>
@@ -90,7 +82,7 @@ export default handleActions(
 
     [SET_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        // draft.list = action.payload.comment_list;
+        draft.list = [...action.payload.list]
       }),
     [DELETE_COMMENT]: (state, action) =>
       produce(state, (draft) => {
@@ -106,11 +98,9 @@ export default handleActions(
 );
 
 const actionCreators = {
-  addComment,
   addCommentDB,
-  getComment,
-  setComment,
-  deleteCommentDB,
+  setcommentDB,
+  delcommentDB,
 };
 
 export { actionCreators };
