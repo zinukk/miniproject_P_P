@@ -55,16 +55,17 @@ const Login = (props) => {
                     <LoginBox>
                         <h2>로그인(LOGIN)</h2>
                         <div> 
-                            <form>
-                                <input type="text" name="user_id" id="user_id" placeholder="아이디를 입력해주세요.🏝" onChange={(e)=>{
+                            <form action="http://54.180.90.59:8080/api/login" method="POST">
+                                <input type="text" name="userId" id="userId" placeholder="아이디를 입력해주세요.🏝" onChange={(e)=>{
                                     setUserId(e.target.value);
                                 }} />
-                                <input type="password" name="user_pwd" id="user_pwd" autoComplete="on" onChange={(e)=>{
+                                <input type="password" name="password" id="password" autoComplete="on" onChange={(e)=>{
                                     setPassword(e.target.value);
                                 }}
                                 placeholder="비밀번호를 입력해주세요.🏝" />
+                                <LogBtn onClick={login} type="submit">Login</LogBtn>
                            </form>
-                            <LogBtn onClick={login}>Login</LogBtn>
+                            {/* <LogBtn onClick={login} type="submit">Login</LogBtn> */}
                             <Gogo onClick={()=>{
                                 history.push('/signup')
                             }

@@ -19,9 +19,7 @@ const checkUser = createAction(CHECK_USER, (userId) => ({ userId }));
 // 초기값
 const initialState = {
   
-  userId: 'dfsdff',
-  email: 'db1234@naver.com',
-  nickname: '유짱',
+  user: {},
   is_login: false,
 };
 //미들웨어
@@ -34,9 +32,10 @@ const loginDB = (userId, password) => {
     .login(userId, password)
       .then((res) => {
         setCookie("token", res.data[1].token, 5);
+        //setCookie('token', res.data.token, 3);
         localStorage.setItem("userId", res.data[0].userId);
         dispatch(setUser({ userId: userId }));
-        history.push('/');
+        history.goBack();
         window.alert(
           `${localStorage.getItem("nickname")}님 안녕하세요!`,
           "P_P에 방문해주셔서 감사합니다!",
@@ -44,19 +43,16 @@ const loginDB = (userId, password) => {
         );
       })
       .catch((err) => {
-        window.alert(
-          "아이디 혹은 비밀번호가 일치하지 않습니다",
-          "다시한번 입력해주세요!",
-          "error"
-        );
-        console.log(err, '나는 로그인 에러닷!!!')
+        window.alert("아이디 혹은 비밀번호가 일치하지 않습니다");
+        console.log(err, '나는 로그인 에러닷!!!');
+        //history.replace('/login');
       });
   };
 };
 //회원가입 기능
-const signupDB = (email, nickname, userId, password, passwordCheck) => {
+const signupDB = (userId, nickname,password, passwordCheck,email) => {
   return function (dispatch, getState, { history }) {
-    apis.signup(email, nickname, userId,password,passwordCheck).then((res)=>{
+    apis.signup(userId, nickname,password, passwordCheck,email).then((res)=>{
       window.alert('회원가입 완료!!😇');
       history.replace('/login');
       console.log(res)
