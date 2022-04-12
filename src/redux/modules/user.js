@@ -35,7 +35,7 @@ const loginDB = (userId, password) => {
         //setCookie('token', res.data.token, 3);
         localStorage.setItem("userId", res.data[0].userId);
         dispatch(setUser({ userId: userId }));
-        history.push('/');
+        history.goBack();
         window.alert(
           `${localStorage.getItem("nickname")}님 안녕하세요!`,
           "P_P에 방문해주셔서 감사합니다!",
