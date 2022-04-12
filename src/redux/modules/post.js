@@ -3,6 +3,7 @@ import { produce } from "immer";
 import axios from "axios";
 import { history } from "../configStore";
 import { apis } from "../../shared/api";
+import { instance } from "../../shared/api";
 
 // 액션
 const SET_POST = "SET_POST";
@@ -42,13 +43,38 @@ const initialPost = {
 };
 
 // 미들웨어
-const sendWriteDataDB = (title, location, content, createdAt, modifiedAt) => {
+// const addPostDB = (title, content, location, file) => {
+//   return function (dispatch, getState, { history }) {
+//     apis
+//       .addPost(title, content, location, file)
+//       .then((res) => {
+//         if (res.data === "게시글 작성이 완료되었습니다.") {
+//           alert(res.data);
+//           history.replace("/");
+//         } else {
+//           alert(res.data);
+//         }
+//       })
+//       .catch((e) => alert(e));
+//   };
+// };
+
+const sendWriteDataDB = (data) => {
   return function (dispatch, getState, { history }) {
+    const file = new FormData();
+
+    file.append("title", data.title);
+    file.append("content", data.content);
+    file.append("location", data.location);
+    file.append("imageUrl", data.imageUrl);
+
     axios
-      .post("http://54.180.90.59:8080/api/posts", {
-        title: title,
-        location: location,
-        content: content,
+      .post("http://54.180.90.59:8080/api/posts", file, {
+        headers: {
+          "content-type": "multipart/form-data",
+          // accept: "application/json,",
+          // Authorization: token,
+        },
       })
       .then((res) => {
         dispatch(setpostDB());
@@ -75,11 +101,16 @@ const setpostDB = () => {
   };
 };
 
-const getOnePostDB = () => {
+const getOnePostDB = (pId) => {
   return function (dispatch, getState, { history }) {
-    // axios.get("").then((res) => {
-    //   dispatch(getOnePost(res.data));
-    // });
+    // axios
+    //   .get(`http://54.180.90.59:8080/api/posts/${pId}`)
+    //   .then((res) => {
+    //     dispatch(getOnePost(res.data));
+    //   })
+    //   .catch((err) => {
+    //     console.log("err", err);
+    //   });
     const data = { ...initialPost };
     dispatch(getOnePost(data));
   };

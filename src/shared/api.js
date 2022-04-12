@@ -6,7 +6,7 @@ const token = tokenCheck.split("=")[1];
 
 // export default instance;
 const api = axios.create({
-  baseURL: 'http://54.180.90.59:8080',
+  baseURL: "http://54.180.90.59:8080",
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json,",
@@ -19,7 +19,7 @@ const instance = axios.create({
   headers: {
     "content-type": "multipart/form-data",
     accept: "application/json,",
-    Authorization: token,
+    // Authorization: token,
   },
 });
 //로그인
@@ -37,14 +37,12 @@ export const apis = {
   test: () => api.get("/"),
 
   // 포스팅 추가
-  addPost: (title, location, content, file, createdAt, modifiedAt) =>
+  addPost: (title, content, location, file) =>
     instance.post("/api/posts", {
       title: title,
       content: content,
       imgUrl: file,
       location: location,
-      createdAt: createdAt,
-      modifiedAt: modifiedAt,
     }),
 
   //로그인
