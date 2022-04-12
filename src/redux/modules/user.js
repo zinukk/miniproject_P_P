@@ -31,8 +31,8 @@ const loginDB = (userId, password) => {
     apis
     .login(userId, password)
       .then((res) => {
-        //setCookie("token", res.data[1].token, 5);
-        setCookie('token', res.data.token, 3);
+        setCookie("token", res.data[1].token, 5);
+        //setCookie('token', res.data.token, 3);
         localStorage.setItem("userId", res.data[0].userId);
         dispatch(setUser({ userId: userId }));
         history.push('/');
