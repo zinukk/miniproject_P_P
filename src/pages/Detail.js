@@ -4,14 +4,25 @@ import DePost from '../components/DePost';
 import styled from 'styled-components';
 import Comment from '../components/Comment';
 
+import { useSelector,useDispatch } from 'react-redux';
+import { actionCreators as comActions } from '../redux/modules/comment';
+
 const Detail = (props) => {
+    const dispatch = useDispatch();
+    //const is_login = useSelector((state)=> state.user.is_login);
+    const postId = props.match.params.postId;
+
+    React.useEffect(()=>{
+        dispatch(comActions.setcommentDB(postId));
+    },[])
+    
     return (
         <React.Fragment>
             <Header/>
             <DeOutter>
                 <DeInner>
-                    <DePost />
-                    <Comment />
+                    <DePost postId={postId}/>
+                    <Comment postId={postId}/>
                 </DeInner>
             </DeOutter>
         </React.Fragment>
