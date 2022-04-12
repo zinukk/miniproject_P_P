@@ -22,6 +22,6 @@ export const checkEmail = (email) => {
     // 특수문자 영문, 숫자 포함, 최소 8자 이상이어야 합니다.
     // var regExp = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^\\w\\s]).{8,25}$/;
     let regPassword =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{4,}$/;
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
     return regPassword.test(password);
   };

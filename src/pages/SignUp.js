@@ -76,7 +76,7 @@ const SignUp = (props) => {
             return;
           }
         
-        dispatch(userActions.signupDB(email, nickname, userId, password, passwordCheck));
+        dispatch(userActions.signupDB(userId, nickname,password, passwordCheck,email));
 
         
     }; //sign
@@ -89,7 +89,7 @@ const SignUp = (props) => {
 
             <LoginGrid is_bg>
                 <Back onClick={()=>{
-                                history.push('/')
+                                history.push('/login')
                             }
                             }> &lt; BACK</Back>
 

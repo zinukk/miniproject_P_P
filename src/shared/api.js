@@ -1,6 +1,6 @@
 import axios from "axios";
 
-//document에 쿠키가 잇는지 확인 , 쿠키가 없다면 instance 헤더에는 토큰값이 null로 지정
+//document에 쿠키가 있는지 확인 , 쿠키가 없다면 instance 헤더에는 토큰값이 null로 지정
 const tokenCheck = document.cookie;
 const token = tokenCheck.split("=")[1];
 
@@ -13,7 +13,7 @@ const api = axios.create({
     Authorization: token,
   },
 });
-
+//사진업로드부분
 const instance = axios.create({
   baseURL: 'http://54.180.90.59:8080',
   headers: {
@@ -22,6 +22,16 @@ const instance = axios.create({
     Authorization: token,
   },
 });
+//로그인
+const instances = axios.create({
+  baseURL: 'http://54.180.90.59:8080',
+  headers: {
+    "content-type": "application/x-www-form-urlencoded",
+    accept: "application/json,",
+  },
+});
+
+
 
 export const apis = {
   test: () => api.get("/"),
@@ -38,8 +48,8 @@ export const apis = {
     }),
 
   //로그인
-  login: (username, password) =>
-    api.post("/api/login", { username: username, password: password }),
+  login: (userId, password) =>
+  instances.post("/api/login", { userId: userId, password: password }),
 
   //아이디 중복확인
   checkUserId: (userId) =>
