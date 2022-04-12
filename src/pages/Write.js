@@ -7,12 +7,13 @@ import { actionCreators as postActions } from "../redux/modules/post";
 import moment from "moment";
 import axios from "axios";
 import { history } from "../redux/configStore";
+import imageCompression from "browser-image-compression";
 
 const Write = () => {
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [imageSrc, setImageSrc] = useState("");
-  const [imageUrl, setimageUrl] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
   const [content, setContent] = useState("");
 
   const createdAt = moment().format("YYYY-MM-DD hh:mm:ss");
@@ -20,7 +21,9 @@ const Write = () => {
 
   const dispatch = useDispatch();
 
-  // const sendWriteDataDB = async (e) => {
+  const data = { title, location, imageUrl, content };
+
+  // const addPosting = async (e) => {
   //   e.preventDefault();
 
   //   const file = new FormData();
@@ -29,45 +32,26 @@ const Write = () => {
 
   //   await axios({
   //     method: "post",
-  //     url: "",
+  //     url: "http://54.180.90.59:8080/api/images",
   //     data: file,
-  //   })
-  //     // await apiMultiPart.addImg(file)
-  //     .then((res) => {
-  //       const file = res.data;
-  //       dispatch(
-  //         userActions.sendWriteDataDB(
-  //           title,
-  //           location,
-  //           content,
-  //           createdAt,
-  //           modifiedAt,
-  //           file
-  //         )
-  //       );
-  //     });
+  //   }).then((res) => {
+  //     const file = res.data;
+
+  //     dispatch(postActions.addPostDB(title, content, location, file));
+  //   });
   // };
-
-  // const file = btoa(imageUrl);
-
-  // console.log(file);
+  console.log(imageUrl);
 
   const writeData = () => {
-    dispatch(
-      postActions.sendWriteDataDB(
-        title,
-        location,
-        content,
-        createdAt,
-        modifiedAt
-      )
-    );
+    dispatch(postActions.sendWriteDataDB(data));
   };
 
   const encodeFileToBase64 = (fileBlob) => {
     const reader = new FileReader();
 
     reader.readAsDataURL(fileBlob);
+
+    console.log(reader);
 
     return new Promise((resolve) => {
       reader.onload = () => {
@@ -90,7 +74,7 @@ const Write = () => {
               accept={"image/*"}
               onChange={(e) => {
                 encodeFileToBase64(e.target.files[0]);
-                setimageUrl(e.target.files[0]);
+                setImageUrl(e.target.files[0]);
               }}
             />
             <PreviewBox>

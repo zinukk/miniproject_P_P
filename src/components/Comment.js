@@ -6,19 +6,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as commentActions } from "../redux/modules/comment";
 
 const Comment = (props) => {
-  const {postId} = props;
+  const { postId } = props;
   const dispatch = useDispatch();
   //const comment_list = useSelector((state) => state.comment.list);
+
+  console.log(postId);
 
   const [comment, setComment] = useState("");
 
   const addCom = () => {
-    if(comment.length === 0){
-      window.alert('아무내용도 없네요? 내용을 적어주세요!!')
+    if (comment.length === 0) {
+      window.alert("아무내용도 없네요? 내용을 적어주세요!!");
       return;
-  }
-    dispatch(commentActions.addCommentDB(comment,postId));
-    setComment('');
+    }
+    dispatch(commentActions.addCommentDB(comment, postId));
+    setComment("");
   };
 
   return (

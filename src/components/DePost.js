@@ -10,12 +10,12 @@ import { useSelector } from "react-redux";
 const DePost = (props) => {
   const dispatch = useDispatch();
 
+  const pId = props.postId;
+
   const one_post = useSelector((state) => state.post.one_post);
 
-  console.log(one_post);
-
   React.useEffect(() => {
-    dispatch(postActions.getOnePostDB());
+    dispatch(postActions.getOnePostDB(pId));
   }, []);
 
   const { postId, title, content, location, nickname, imageUrl, createdAt } =
@@ -29,15 +29,15 @@ const DePost = (props) => {
         </div>
         <DeHeader>
           <Grid>
-            <DeImg size="60" src={imageUrl} />
-            {/* <DeImg size="60" src={one_post.imageUrl} /> */}
+            {/* <DeImg size="60" src={imageUrl} /> */}
+            <DeImg size="60" src={one_post?.imageUrl} />
             {/* <p>{nickname}님</p> */}
             <p>{one_post?.nickname}님</p>
             {/* <p>{createdAt}</p> */}
+            <p>위치 : {one_post?.location}</p>
             <p>{one_post?.createdAt}</p>
           </Grid>
           <Grid>
-            <DeBtn is_loc />
             <DeBtn is_edit />
             <DeBtn is_del />
           </Grid>

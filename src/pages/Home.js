@@ -38,7 +38,7 @@ const Home = () => {
                 history.push(`/detail/${cur.postId}`);
               }}
             >
-              {/* <ImgBox src={cur.imageUrl} /> */}
+              <ImgBox src={cur.imageUrl} />
               <TextBox>
                 <GoMegaphone />
                 <p style={{ marginLeft: "10px", fontWeight: "600" }}>
