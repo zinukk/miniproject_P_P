@@ -42,6 +42,12 @@ export const apis = {
   //로그인
   login: (username, password) =>
     api.post("/api/login", { username: username, password: password }),
+
+  //아이디 중복확인
+  checkUserId: (userId) =>
+    api.post("/api/user/checkid", {
+      userId: userId,
+    }),
   
   // 회원가입용 요청
   signup: (userId,nickname,password,passwordCheck,email) => api.post('/api/signup',{
