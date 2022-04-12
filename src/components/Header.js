@@ -1,12 +1,16 @@
 import React from 'react';
+import { useDispatch,useSelector } from 'react-redux';
 import styled from 'styled-components';
 import {history} from "../redux/configStore";
+//액션크리에이터
+import { actionCreators as userActions } from '../redux/modules/user';
 
 import { getCookie,deleteCookie } from '../shared/Cookie';
 
 
 const Header = (props) => {
-
+    const dispatch= useDispatch();
+    //데이터 주고 받을 때 주석 처리
     const [is_login, setIsLogin] =React.useState(false);
     
     React.useEffect(()=>{
@@ -18,7 +22,13 @@ const Header = (props) => {
         }else{
             setIsLogin(false);
         }
-    }, [])
+    }, []);
+    //데이터 주고 받을 때 주석 풀기
+    //const is_login = useSelector((store) => store.users.is_login);
+
+    const logout= ()=>{
+        dispatch(userActions.logoutDB());
+    };
 
     if(is_login === true){
         return (
@@ -29,11 +39,8 @@ const Header = (props) => {
                                 }
                                 }>🏝P_P🏝</HeaderLogo>
                     <FlexDiv>
-                        <HeaderUserButton>@@@님, 안녕하세요!</HeaderUserButton>
-                        <HeaderButton onClick={()=>{
-                            deleteCookie('userId');
-                            history.replace('/login')
-                        }}
+                        <HeaderUserButton> {localStorage.getItem("nickname")}님, 안녕하세요!</HeaderUserButton>
+                        <HeaderButton onClick={logout}
                         >Logout</HeaderButton>
                     </FlexDiv>
                 </HeaderBox>
