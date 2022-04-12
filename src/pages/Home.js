@@ -7,7 +7,7 @@ import { RESP } from "../redux/modules/response";
 import { useSelector } from "react-redux";
 
 const Home = () => {
-  const data = RESP;
+  //   const data = RESP;
 
   const post_list = useSelector((state) => state.post.lists);
 
@@ -20,7 +20,11 @@ const Home = () => {
                 <HomeImgConvert src="image/tree.png" /> */}
       <HomeBody>
         <FlexDiv>
-          <WriteButton>
+          <WriteButton
+            onClick={() => {
+              history.push("/write");
+            }}
+          >
             <CameraImg src="image/camera.png" />
           </WriteButton>
           <HomeTextBox>당신만의 프라이빗한 장소를 올려주세요!</HomeTextBox>
@@ -30,9 +34,9 @@ const Home = () => {
           {post_list?.map((cur, idx) => (
             <Posts
               key={idx}
-              // onClick={() => {
-              //   history.push(`/detail/${cur.postId}`);
-              // }}
+              onClick={() => {
+                history.push(`/detail/${cur.postId}`);
+              }}
             >
               {/* <ImgBox src={cur.imageUrl} /> */}
               <TextBox>
@@ -44,7 +48,7 @@ const Home = () => {
               <TextBox>
                 <GoMilestone />
                 <p style={{ marginLeft: "10px", fontSize: "13px" }}>
-                  {cur.body}
+                  {cur.location}
                 </p>
               </TextBox>
             </Posts>
@@ -71,7 +75,7 @@ const CameraImg = styled.img`
   width: 130px;
   height: 130px;
   border-radius: 130px;
-  border: 1px solid #eee;
+  border: 3px solid #b2e1f4;
   background: white;
 `;
 

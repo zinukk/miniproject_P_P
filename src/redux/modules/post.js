@@ -42,26 +42,20 @@ const initialPost = {
 };
 
 // 미들웨어
-const sendWriteDataDB = (
-  title,
-  location,
-  content,
-  createdAt,
-  file,
-  modifiedAt
-) => {
+const sendWriteDataDB = (title, location, content, createdAt, modifiedAt) => {
   return function (dispatch, getState, { history }) {
-    apis
-      .addPost(title, location, content, createdAt, file, modifiedAt)
-      .then((res) => {
-        if (res.data === "게시글 작성이 완료되었습니다.") {
-          alert(res.data);
-          history.replace("/");
-        } else {
-          alert(res.data);
-        }
+    axios
+      .post("", {
+        title: title,
+        location: location,
+        content: content,
+        createdAt: createdAt,
+        modifiedAt: null,
       })
-      .catch((e) => alert(e));
+      .then((res) => console.log(res.data))
+      .catch((err) => {
+        console.log("err", err);
+      });
   };
 };
 

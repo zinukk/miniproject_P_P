@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import styled from "styled-components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { actionCreators as userActions } from "../redux/modules/user";
+import { actionCreators as postActions } from "../redux/modules/post";
 import moment from "moment";
 import axios from "axios";
 
@@ -21,32 +21,48 @@ const Write = () => {
 
   const dispatch = useDispatch();
 
-  const sendWriteDataDB = async (e) => {
-    e.preventDefault();
+  // const sendWriteDataDB = async (e) => {
+  //   e.preventDefault();
 
-    const file = new FormData();
+  //   const file = new FormData();
 
-    file.append("file", imageUrl);
+  //   file.append("file", imageUrl);
 
-    await axios({
-      method: "post",
-      url: "",
-      data: file,
-    })
-      // await apiMultiPart.addImg(file)
-      .then((res) => {
-        const file = res.data;
-        dispatch(
-          userActions.sendWriteDataDB(
-            title,
-            location,
-            content,
-            createdAt,
-            modifiedAt,
-            file
-          )
-        );
-      });
+  //   await axios({
+  //     method: "post",
+  //     url: "",
+  //     data: file,
+  //   })
+  //     // await apiMultiPart.addImg(file)
+  //     .then((res) => {
+  //       const file = res.data;
+  //       dispatch(
+  //         userActions.sendWriteDataDB(
+  //           title,
+  //           location,
+  //           content,
+  //           createdAt,
+  //           modifiedAt,
+  //           file
+  //         )
+  //       );
+  //     });
+  // };
+
+  // const file = btoa(imageUrl);
+
+  // console.log(file);
+
+  const writeData = () => {
+    dispatch(
+      postActions.sendWriteDataDB(
+        title,
+        location,
+        content,
+        createdAt,
+        modifiedAt
+      )
+    );
   };
 
   const encodeFileToBase64 = (fileBlob) => {
@@ -111,7 +127,7 @@ const Write = () => {
             <br />
             <DataButton
               onClick={() => {
-                sendWriteDataDB();
+                writeData();
               }}
             >
               저장하기
