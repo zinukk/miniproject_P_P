@@ -13,7 +13,7 @@ const SignUp = (props) => {
     const dispatch=useDispatch();
 
     const [userId,setUserId]=useState('');
-    const [checkuserId, setCheckuserId] = useState(false);
+    const [checkUserId, setCheckUserId] = useState(false);
     const [nickname,setNickname]=useState('');
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
@@ -29,12 +29,12 @@ const SignUp = (props) => {
             .then((res)=>{
                // window.alert(res.data);
                 window.alert('사용가능한 아이디 입니다~');
-                setCheckuserId(true);
+                setCheckUserId(true);
             })
             .catch((err)=>{
                 //window.alert(err.data);
                 window.alert('중복된 아이디 입니다.');
-                setCheckuserId(false);
+                setCheckUserId(false);
             });
         }
         
