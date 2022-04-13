@@ -61,21 +61,34 @@ const initialPost = {
 
 const sendWriteDataDB = (data) => {
   return function (dispatch, getState, { history }) {
-    const file = new FormData();
+    // const file = new FormData();
 
-    file.append("title", data.title);
-    file.append("content", data.content);
-    file.append("location", data.location);
-    file.append("imageUrl", data.imageUrl);
+    // file.append("title", data.title);
+    // file.append("content", data.content);
+    // file.append("location", data.location);
+    // // file.append("imageUrl", data.imageUrl);
+    // file.append(
+    //   "imageUrl",
+    //   new Blob([JSON.stringify(data.imageUrl)], { type: "application/json" })
+    // );
 
     axios
-      .post("http://54.180.90.59:8080/api/posts", file, {
-        headers: {
-          "content-type": "multipart/form-data",
-          // accept: "application/json,",
-          // Authorization: token,
-        },
-      })
+      .post(
+        "http://54.180.90.59:8080/api/posts",
+        // {
+        //   headers: {
+        //     "content-type": "multipart/form-data",
+        //     // accept: "application/json,",
+        //     // Authorization: token,
+        //   },
+        // },
+        {
+          title: data.title,
+          location: data.location,
+          content: data.content,
+          // imageUrl: data.imageUrl,
+        }
+      )
       .then((res) => {
         dispatch(setpostDB());
         console.log(res.data);

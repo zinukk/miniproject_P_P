@@ -40,7 +40,7 @@ const Write = () => {
   //     dispatch(postActions.addPostDB(title, content, location, file));
   //   });
   // };
-  console.log(imageUrl);
+  console.log(imageSrc);
 
   const writeData = () => {
     dispatch(postActions.sendWriteDataDB(data));
