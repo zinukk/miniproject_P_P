@@ -14,7 +14,7 @@ const Home = () => {
   console.log(post_list);
 
   return (
-    <div>
+    <>
       <Header></Header>
       {/* <HomeImg src="image/tree.png" />
                 <HomeImgConvert src="image/tree.png" /> */}
@@ -55,7 +55,7 @@ const Home = () => {
           ))}
         </PostBox>
       </HomeBody>
-    </div>
+    </>
   );
 };
 
@@ -71,6 +71,22 @@ const Home = () => {
 //   top: 70px;
 //   right: 0px;
 // `;
+const HomeBody = styled.div`
+  width: 1000px;
+  margin: 90px auto;
+  @media screen and (max-width: 1000px) {
+      width:100%;
+    }
+`;
+const FlexDiv = styled.div`
+  width: 600px;
+  display: flex;
+  margin: 0 auto;
+  padding-top: 50px;
+  @media screen and (max-width: 600px) {
+      width:100%;
+    }
+`;
 const CameraImg = styled.img`
   width: 130px;
   height: 130px;
@@ -82,28 +98,42 @@ const CameraImg = styled.img`
 const WriteButton = styled.button`
   background: none;
   border: none;
+  cursor:pointer;
+  transition: transform 300ms ease-in-out;
+  
+    &:hover{
+        transform:translate(15px,-15px);
+    }
 `;
 const HomeTextBox = styled.div`
   font-size: 20px;
-  border-left: 3px solid gray;
-  margin: 30px auto;
+  /* border-left: 3px solid gray; */
+  margin-top: 30px;
   padding: 20px 40px;
   align-items: center;
   width: fit-content;
-  test-align: center;
+  font-family:"Gugi";
+  text-align: center;
+  @media screen and (max-width: 600px) {
+    font-size: 16px;
+    }
 `;
-const FlexDiv = styled.div`
-  width: 600px;
-  display: flex;
-  margin: 0 auto;
-  margin-top: 150px;
-`;
+
 const PostBox = styled.div`
   width: 1000px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-row-gap: 3em;
   margin: 100px auto;
+  @media screen and (max-width: 1000px) {
+      width:100%;
+      grid-template-columns: repeat(2, 2fr);
+    }
+    @media screen and (max-width: 600px) {
+      width:100%;
+      grid-template-columns: repeat(1, 3fr);
+    }
+ 
 `;
 const Posts = styled.div`
   width: 300px;
@@ -113,11 +143,14 @@ const Posts = styled.div`
   border-radius: 5px;
   box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
     rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+
+    transition: transform 300ms ease-in-out;
+  
+  &:hover{
+      transform:translate(5px,-20px);
+  }
 `;
-const HomeBody = styled.div`
-  width: 1000px;
-  margin: 90px auto;
-`;
+
 const ImgBox = styled.img`
   width: 300px;
   height: 200px;

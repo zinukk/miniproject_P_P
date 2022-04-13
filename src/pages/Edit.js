@@ -123,6 +123,10 @@ const ImgBox = styled.div`
   width: 400px;
   height: 450px;
   margin: 25px 5px;
+
+  & > h2{
+    font-family:"Gugi";
+  }
 `;
 const PreviewBox = styled.div`
   width: 450px;
