@@ -39,9 +39,15 @@ const DePost = (props) => {
             <p>{one_post?.createdAt}</p>
           </Grid>
           <Grid>
-            <DeBtn is_edit _onClick={()=>{
-              history.push(`/write/${postId}`);
-            }}/>
+            <DeBtn
+              is_edit
+              _onClick={() => {
+                history.push({
+                  pathname: `write/${postId}`,
+                  state: { one_post },
+                });
+              }}
+            />
             <DeBtn is_del />
           </Grid>
         </DeHeader>

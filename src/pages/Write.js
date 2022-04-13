@@ -2,50 +2,40 @@ import React from "react";
 import Header from "../components/Header";
 import styled from "styled-components";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import moment from "moment";
 import axios from "axios";
 import { history } from "../redux/configStore";
 import imageCompression from "browser-image-compression";
+import { useLocation } from "react-router-dom";
 
 const Write = (props) => {
+  const dispatch = useDispatch();
+  const locat = useLocation();
+
+  //useState
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [imageSrc, setImageSrc] = useState("");
   const [imageUrl, setImageUrl] = useState(null);
   const [content, setContent] = useState("");
-
-  const createdAt = moment().format("YYYY-MM-DD hh:mm:ss");
-  const modifiedAt = moment().format("YYYY-MM-DD hh:mm:ss");
-
-  const dispatch = useDispatch();
+  // const createdAt = moment().format("YYYY-MM-DD hh:mm:ss");
+  // const modifiedAt = moment().format("YYYY-MM-DD hh:mm:ss");
 
   const data = { title, location, imageUrl, content };
 
-  // const addPosting = async (e) => {
-  //   e.preventDefault();
+  console.log(imageUrl);
 
-  //   const file = new FormData();
+  // const post_value = locat.state.one_post;
 
-  //   file.append("file", imageUrl);
-
-  //   await axios({
-  //     method: "post",
-  //     url: "http://54.180.90.59:8080/api/images",
-  //     data: file,
-  //   }).then((res) => {
-  //     const file = res.data;
-
-  //     dispatch(postActions.addPostDB(title, content, location, file));
-  //   });
-  // };
-  console.log(imageSrc);
+  console.log(locat.state);
 
   const writeData = () => {
     dispatch(postActions.sendWriteDataDB(data));
   };
 
+  //미리보기
   const encodeFileToBase64 = (fileBlob) => {
     const reader = new FileReader();
 
@@ -55,11 +45,17 @@ const Write = (props) => {
 
     return new Promise((resolve) => {
       reader.onload = () => {
-        setImageSrc(reader.result);
+        setImageUrl(reader.result);
         resolve();
       };
     });
   };
+
+  const postId = props.match.params.postId;
+
+  const is_edit = postId ? true : false;
+
+  const editData = () => {};
 
   return (
     <div>
@@ -68,7 +64,9 @@ const Write = (props) => {
         <TravelImg src="/image/write.png"></TravelImg>
         <FlexBox>
           <ImgBox>
-            <h2>사진을 업로드해주세요!</h2>
+            <h2>
+              {is_edit ? "게시물을 수정해주세요!" : "사진을 업로드해주세요!"}
+            </h2>
             <UploadFileInput
               type="file"
               accept={"image/*"}
@@ -108,13 +106,23 @@ const Write = (props) => {
               }}
             />{" "}
             <br />
-            <DataButton
-              onClick={() => {
-                writeData();
-              }}
-            >
-              저장하기
-            </DataButton>
+            {is_edit ? (
+              <DataButton
+                onClick={() => {
+                  editData();
+                }}
+              >
+                게시물 수정
+              </DataButton>
+            ) : (
+              <DataButton
+                onClick={() => {
+                  writeData();
+                }}
+              >
+                저장하기
+              </DataButton>
+            )}
           </DataBox>
         </FlexBox>
       </Container>
