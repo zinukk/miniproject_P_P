@@ -23,8 +23,6 @@ const Write = (props) => {
 
   const data = { title, location, imageUrl, content };
 
-  console.log(imageUrl);
-
   // const post_value = locat.state.one_post;
 
   const writeData = () => {

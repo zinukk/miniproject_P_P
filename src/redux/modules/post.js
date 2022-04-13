@@ -145,9 +145,9 @@ const editDataDB = (title, location, imageUrl, content, pId) => {
         imageUrl: null,
       })
       .then((res) => {
-        dispatch(getOnePost(res.data));
+        dispatch(setpostDB(res.data));
         window.alert("수정을 성공했습니다!");
-        history.push("/");
+        history.push(`/detail/${pId}`);
         // history.push(`detail/${pId}`);
       })
       .catch((err) => {
