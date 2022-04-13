@@ -18,10 +18,8 @@ const CommentList = (props) => {
   const delCom = () => {
     dispatch(comActions.delcommentDB(id, postId));
   };
-
+  //awf
   //   const comment_list = useSelector((state) => state.comment.list);
-
-  console.log(one_post?.comments);
   //   const { postId } = props;
 
   //   React.useEffect(() => {
@@ -38,7 +36,7 @@ const CommentList = (props) => {
       {one_post?.comments.map((c, idx) => {
         // return <CommentItem key={idx} {...c} />;
         return (
-          <Grid>
+          <Grid key={idx}>
             <p>{one_post?.createdAt}</p>
             <div>
               <ComPro>
