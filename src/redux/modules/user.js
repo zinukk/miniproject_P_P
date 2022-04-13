@@ -76,7 +76,7 @@ const logincheckDB = () => {
 };
 
 //유저 정보
-const logincheckDB = () => {
+const checkUserDB = () => {
   return function(dispatch, getState, {history}){
       let token = document.cookie.split('=')[1];
      
@@ -85,7 +85,7 @@ const logincheckDB = () => {
           .then(res => {
               let username = res.data.username;
               let nickname = res.data.nickname;
-              dispatch(logIn(id, nick));
+              dispatch(setUser(username,nickname));
           })
           .catch(err=>{
               console.log('error:',err);
@@ -144,6 +144,7 @@ const actionCreators = {
   logincheckDB,
   logoutDB,
   setUser,
+  checkUserDB,
 };
 
 export { actionCreators };
