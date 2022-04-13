@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-
-const Write = () => {
-    return (
-        <div>
-            
-        </div>
-    );
-};
-
-export default Write;
-
-=======
 import React from "react";
 import Header from "../components/Header";
 import styled from "styled-components";
@@ -222,4 +208,3 @@ const FlexBox = styled.div`
 `;
 
 export default Write;
->>>>>>> 94d211f3ac1888fe75e811f89d3cdc74ee8284eb
