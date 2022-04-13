@@ -40,7 +40,7 @@ const Comment = (props) => {
             width="15%"
             text="댓글 남기기!"
             height="100px"
-            onClick={addCom}
+            _onClick={addCom}
           />
         </ConInput>
         <CommentList postId={postId} />

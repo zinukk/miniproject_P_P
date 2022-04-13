@@ -35,21 +35,21 @@ const Write = (props) => {
     dispatch(postActions.sendWriteDataDB(data));
   };
 
-  //미리보기
-  const encodeFileToBase64 = (fileBlob) => {
-    const reader = new FileReader();
+  // //미리보기
+  // const encodeFileToBase64 = (fileBlob) => {
+  //   const reader = new FileReader();
 
-    reader.readAsDataURL(fileBlob);
+  //   reader.readAsDataURL(fileBlob);
 
-    console.log(reader);
+  //   console.log(reader);
 
-    return new Promise((resolve) => {
-      reader.onload = () => {
-        setImageUrl(reader.result);
-        resolve();
-      };
-    });
-  };
+  //   return new Promise((resolve) => {
+  //     reader.onload = () => {
+  //       setImageUrl(reader.result);
+  //       resolve();
+  //     };
+  //   });
+  // };
 
   const postId = props.match.params.postId;
 
@@ -71,7 +71,7 @@ const Write = (props) => {
               type="file"
               accept={"image/*"}
               onChange={(e) => {
-                encodeFileToBase64(e.target.files[0]);
+                // encodeFileToBase64(e.target.files[0]);
                 setImageUrl(e.target.files[0]);
               }}
             />

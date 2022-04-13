@@ -66,7 +66,7 @@ const sendWriteDataDB = (data) => {
     // file.append("title", data.title);
     // file.append("content", data.content);
     // file.append("location", data.location);
-    file.append("imageUrl", data.imageUrl);
+    // file.append("imageUrl", data.imageUrl);
     // file.append(
     //   "imageUrl",
     //   new Blob([JSON.stringify(data.imageUrl)], { type: "application/json" })
@@ -75,20 +75,20 @@ const sendWriteDataDB = (data) => {
     axios
       .post(
         "http://54.180.90.59:8080/api/posts",
-        { ...file },
-        {
-          headers: {
-            "content-type": "multipart/form-data",
-            // accept: "application/json,",
-            // Authorization: token,
-          },
-        }
+        // { ...file },
         // {
-        //   // title: data.title,
-        //   // location: data.location,
-        //   // content: data.content,
-        //   imageUrl: data.imageUrl,
-        // }
+        //   headers: {
+        //     "content-type": "multipart/form-data",
+        //     // accept: "application/json,",
+        //     // Authorization: token,
+        //   },
+        // },
+        {
+          title: data.title,
+          location: data.location,
+          content: data.content,
+          // imageUrl: data.imageUrl,
+        }
       )
       .then((res) => {
         dispatch(setpostDB());
