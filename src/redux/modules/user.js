@@ -14,7 +14,7 @@ const CHECK_USER ="CHECK_USER";
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
 const getUser = createAction(GET_USER, (user) => ({ user }));
 const setUser = createAction(SET_USER, (user) => ({ user }));
-const checkUser = createAction(CHECK_USER, (username) => ({ username }));
+const checkUser = createAction(SET_USER, (user) => ({ user }));
 
 // 초기값
 const initialState = {
@@ -75,6 +75,28 @@ const logincheckDB = () => {
   };
 };
 
+//유저 정보
+const checkUserDB = () => {
+  return function(dispatch, getState, {history}){
+      let token = document.cookie.split('=')[1];
+     
+      if(token){
+          apis.usercheck()
+          .then(res => {
+              let username = res.data.username;
+              let nickname = res.data.nickname;
+              dispatch(setUser(username,nickname));
+          })
+          .catch(err=>{
+              console.log('error:',err);
+          })
+      }else{
+          dispatch(logOut())
+      }
+      
+  }
+}
+
 // 로그아웃토큰삭제
 const logoutDB = () => {
   return function (dispatch, getState, { history }) {
@@ -122,6 +144,7 @@ const actionCreators = {
   logincheckDB,
   logoutDB,
   setUser,
+  checkUserDB,
 };
 
 export { actionCreators };
