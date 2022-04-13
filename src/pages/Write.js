@@ -16,7 +16,7 @@ const Write = (props) => {
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [imageSrc, setImageSrc] = useState("");
-  const [imageUrl, setImageUrl] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
   const [content, setContent] = useState("");
   // const createdAt = moment().format("YYYY-MM-DD hh:mm:ss");
   // const modifiedAt = moment().format("YYYY-MM-DD hh:mm:ss");
@@ -29,6 +29,7 @@ const Write = (props) => {
     dispatch(postActions.sendWriteDataDB(data));
   };
 
+  console.log(imageUrl);
   //미리보기
   const encodeFileToBase64 = (fileBlob) => {
     const reader = new FileReader();
@@ -39,7 +40,7 @@ const Write = (props) => {
 
     return new Promise((resolve) => {
       reader.onload = () => {
-        setImageUrl(reader.result);
+        setImageSrc(reader.result);
         resolve();
       };
     });
@@ -118,8 +119,8 @@ const ImgBox = styled.div`
   width: 400px;
   height: 450px;
   margin: 25px 5px;
-  & > h2{
-    font-family:"Gugi";
+  & > h2 {
+    font-family: "Gugi";
   }
 `;
 const PreviewBox = styled.div`

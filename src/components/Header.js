@@ -13,8 +13,8 @@ const Header = (props) => {
   const [is_login, setIsLogin] = React.useState(false);
 
   React.useEffect(() => {
-    let cookie = getCookie("userId");
-    console.log(cookie,"나는 헤더에 있는 쿠키다!!!!");
+    let cookie = getCookie("userName");
+    console.log(cookie, "나는 헤더에 있는 쿠키다!!!!");
 
     if (cookie) {
       setIsLogin(true);
@@ -106,7 +106,7 @@ const HeaderButton = styled.button`
   border-radius: 5px;
   margin-right: 40px;
   cursor: pointer;
-  font-family:"Gugi";
+  font-family: "Gugi";
 `;
 const HeaderLogo = styled.h1`
   font-size: 25px;

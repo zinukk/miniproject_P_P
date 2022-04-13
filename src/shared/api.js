@@ -39,9 +39,8 @@ export const apis = {
   login: (username, password) =>
     api.post("/api/login", { username: username, password: password }),
 
-  //로그인 체크 
-  userCheck:()=> 
-  api.get("/user/loginCheck"),
+  //로그인 체크
+  userCheck: () => api.get("/user/loginCheck"),
   //아이디 중복확인
   // checkUserId: (userId) =>
   //   api.post("/api/user/checkid", {
@@ -49,9 +48,9 @@ export const apis = {
   //   }),
 
   // 회원가입용 요청
-  signup: (userId, nickname, password, passwordCheck, email) =>
+  signup: (username, nickname, password, passwordCheck, email) =>
     api.post("/api/signup", {
-      userId: userId,
+      username: username,
       nickname: nickname,
       password: password,
       passwordCheck: passwordCheck,

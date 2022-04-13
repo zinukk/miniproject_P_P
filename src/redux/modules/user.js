@@ -1,14 +1,14 @@
 import { createAction, handleAction, handleActions } from "redux-actions";
 import { produce } from "immer";
-import axios  from "axios";
-import {apis} from "../../shared/api";
+import axios from "axios";
+import { apis } from "../../shared/api";
 import { deleteCookie, getCookie, setCookie } from "../../shared/Cookie";
 
 // 액션
 const LOG_OUT = "LOG_OUT";
 const GET_USER = "GET_USER";
 const SET_USER = "SET_USER";
-const CHECK_USER ="CHECK_USER";
+const CHECK_USER = "CHECK_USER";
 
 // 액션 크리에이터
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
@@ -18,45 +18,47 @@ const checkUser = createAction(SET_USER, (user) => ({ user }));
 
 // 초기값
 const initialState = {
-  
   user: {},
   is_login: false,
 };
 //미들웨어
 
-//로그인 
+//로그인
 const loginDB = (username, password) => {
   return function (dispatch, getState, { history }) {
     // 로그인 api
     apis
-    .login(username, password)
+      .login(username, password)
       .then((res) => {
-        console.log(res.data,'나는 로그인 res.data')
-        console.log(res.data[0].username,'나는 로그인 res.data[0].username')
-       /*  setCookie("token", res.data[1].token, 5);
+        // console.log(res.data, "나는 로그인 res.data");
+        // console.log(res.data[0].username, "나는 로그인 res.data[0].username");
+        setCookie("token", res.data[1].token, 5);
         //setCookie('token', res.data.token, 3);
         localStorage.setItem("username", res.data[0].username);
         dispatch(setUser({ username: username }));
-        history.push('/');
-        window.alert(`${localStorage.getItem("nickname")}님 안녕하세요!`); */
+        history.push("/");
+        window.alert(`${localStorage.getItem("nickname")}님 안녕하세요!`);
       })
       .catch((err) => {
         window.alert("아이디 혹은 비밀번호가 일치하지 않습니다");
-        console.log(err.response, '나는 로그인 에러닷!!!');
+        console.log(err.response, "나는 로그인 에러닷!!!");
         //history.replace('/login');
       });
   };
 };
 //회원가입 기능
-const signupDB = (userId, nickname,password, passwordCheck,email) => {
+const signupDB = (username, nickname, password, passwordCheck, email) => {
   return function (dispatch, getState, { history }) {
-    apis.signup(userId, nickname,password, passwordCheck,email).then((res)=>{
-      window.alert('회원가입 완료!!😇');
-      history.replace('/login');
-      console.log(res)
-  }).catch((err)=>{
-    console.log('나는회원가입err다',err.response)
-  });
+    apis
+      .signup(username, nickname, password, passwordCheck, email)
+      .then((res) => {
+        window.alert("회원가입 완료!!😇");
+        history.replace("/login");
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log("나는회원가입err다", err.response);
+      });
   };
 };
 
@@ -75,25 +77,25 @@ const logincheckDB = () => {
 
 //유저 정보
 const checkUserDB = () => {
-  return function(dispatch, getState, {history}){
-      let token = document.cookie.split('=')[1];
-     
-      if(token){
-          apis.usercheck()
-          .then(res => {
-              let username = res.data.username;
-              let nickname = res.data.nickname;
-              dispatch(setUser(username,nickname));
-          })
-          .catch(err=>{
-              console.log('나는 체크유저 error:',err.response);
-          })
-      }else{
-          dispatch(logOut())
-      }
-      
-  }
-}
+  return function (dispatch, getState, { history }) {
+    let token = document.cookie.split("=")[1];
+
+    if (token) {
+      apis
+        .usercheck()
+        .then((res) => {
+          let username = res.data.username;
+          let nickname = res.data.nickname;
+          dispatch(setUser(username, nickname));
+        })
+        .catch((err) => {
+          console.log("나는 체크유저 error:", err.response);
+        });
+    } else {
+      dispatch(logOut());
+    }
+  };
+};
 
 // 로그아웃토큰삭제
 const logoutDB = () => {
