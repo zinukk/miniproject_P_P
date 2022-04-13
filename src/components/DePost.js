@@ -6,6 +6,7 @@ import axios from "axios";
 import { actionCreators as postActions } from "../redux/modules/post";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { history } from "../redux/configStore";
 
 const DePost = (props) => {
   const dispatch = useDispatch();
@@ -38,7 +39,9 @@ const DePost = (props) => {
             <p>{one_post?.createdAt}</p>
           </Grid>
           <Grid>
-            <DeBtn is_edit />
+            <DeBtn is_edit _onClick={()=>{
+              history.push(`/write/${postId}`);
+            }}/>
             <DeBtn is_del />
           </Grid>
         </DeHeader>
