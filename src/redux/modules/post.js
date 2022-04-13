@@ -119,12 +119,13 @@ const setpostDB = () => {
   };
 };
 
-const getOnePostDB = (pId) => {
+const getOnePostDB = (pid) => {
   return function (dispatch, getState, { history }) {
     axios
-      .get(`http://54.180.90.59:8080/api/posts/${pId}`)
+      .get(`http://54.180.90.59:8080/api/posts/${pid}`)
       .then((res) => {
         dispatch(getOnePost(res.data));
+        // console.log(res.data);
       })
       .catch((err) => {
         console.log("err", err.response);
@@ -146,7 +147,8 @@ const editDataDB = (title, location, imageUrl, content, pId) => {
       .then((res) => {
         dispatch(getOnePost(res.data));
         window.alert("수정을 성공했습니다!");
-        history.push(`detail/${pId}`);
+        history.push("/");
+        // history.push(`detail/${pId}`);
       })
       .catch((err) => {
         console.log("err", err.response);
