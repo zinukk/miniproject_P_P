@@ -48,7 +48,16 @@ const DePost = (props) => {
                 });
               }}
             />
-            <DeBtn is_del />
+            <DeBtn
+              is_del
+              _onClick={() => {
+                window.confirm("게시물을 삭제하시겠습니까?")
+                  ? dispatch(postActions.delPostDB(postId))
+                  : window.alert("삭제가 취소되었습니다");
+
+                // dispatch(postActions.delPostDB(postId));
+              }}
+            />
           </Grid>
         </DeHeader>
         <DeGrid>

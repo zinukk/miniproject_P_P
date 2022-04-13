@@ -67,18 +67,19 @@ const addCommentDB = (comment, postId) => {
   };
 };
 
-// const delcommentDB = (commentId, postId) => {
-//   return function (dispatch, getState, { history }) {
-//     apis
-//       .delcom(commentId)
-//       .then(() => {
-//         dispatch(setcommentDB());
-//       })
-//       .catch((err) => {
-//         console.log("나는 댓글삭제err", err);
-//       });
-//   };
-// };
+const delcommentDB = (commentId, pId) => {
+  return function (dispatch, getState, { history }) {
+    apis
+      .delcom(commentId)
+      .then(() => {
+        dispatch(postActions.getOnePostDB(pId));
+        history.push(`/detail/${pId}`);
+      })
+      .catch((err) => {
+        console.log("나는 댓글삭제err", err);
+      });
+  };
+};
 
 export default handleActions(
   {
@@ -108,7 +109,7 @@ export default handleActions(
 const actionCreators = {
   addCommentDB,
   // setcommentDB,
-  // delcommentDB,
+  delcommentDB,
 };
 
 export { actionCreators };

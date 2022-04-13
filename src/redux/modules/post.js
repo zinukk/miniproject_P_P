@@ -15,6 +15,7 @@ const GET_ONE_POST = "GET_ONE_POST";
 // 액션 크레이터
 // const addPost = createAction(ADD_POST, (post_list) => ({ post_list }));
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
+const delPost = createAction(DEL_POST, (postId) => ({ postId }));
 const getOnePost = createAction(GET_ONE_POST, (one_post) => ({ one_post }));
 const editPost = createAction(EDIT_POST, (post_id, post) => ({
   post_id,
@@ -135,6 +136,21 @@ const getOnePostDB = (pid) => {
   };
 };
 
+const delPostDB = (pId) => {
+  return function (dispatch, getState, { history }) {
+    axios
+      .delete(`http://54.180.90.59:8080/api/posts/${pId}`)
+      .then((res) => {
+        dispatch(setpostDB());
+        console.log(res.data);
+        history.replace("/");
+      })
+      .catch((err) => {
+        console.log("err", err.response);
+      });
+  };
+};
+
 const editDataDB = (title, location, imageUrl, content, pId) => {
   return function (dispatch, getState, { history }) {
     axios
@@ -172,11 +188,11 @@ export default handleActions(
         draft.one_post = action.payload.one_post;
         console.log(action.payload.one_post);
       }),
-    // [EDIT_POST]: (state, action) =>
-    //   produce(state, (draft) => {
-    //     draft.one_post = action.payload.one_post;
-    //     console.log(action.payload.one_post);
-    //   }),
+
+    [DEL_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.lists.filter((a) => a.id !== action.payload.postId);
+      }),
   },
   initialState
 );
@@ -188,6 +204,7 @@ const actionCreators = {
   getOnePost,
   setPost,
   editDataDB,
+  delPostDB,
 };
 
 export { actionCreators };

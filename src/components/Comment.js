@@ -10,8 +10,6 @@ const Comment = (props) => {
   const dispatch = useDispatch();
   //const comment_list = useSelector((state) => state.comment.list);
 
-  console.log(postId);
-
   const [comment, setComment] = useState("");
 
   const addCom = () => {

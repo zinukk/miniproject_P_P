@@ -14,10 +14,6 @@ const CommentList = (props) => {
   const one_post = useSelector((state) => state.post.one_post);
 
   const is_me = nickname === _user_nickname ? true : false;
-
-  const delCom = () => {
-    dispatch(comActions.delcommentDB(id, postId));
-  };
   //awf
   //   const comment_list = useSelector((state) => state.comment.list);
   //   const { postId } = props;
@@ -49,7 +45,19 @@ const CommentList = (props) => {
               <DeBtn is_del />
             </div>} */}
                 <div>
-                  <DeBtn is_del _onClick={delCom} />
+                  <DeBtn
+                    is_del
+                    _onClick={() => {
+                      window.confirm("댓글을 삭제하시겠습니까?")
+                        ? dispatch(
+                            comActions.delcommentDB(
+                              one_post?.comments[idx].commentId,
+                              postId
+                            )
+                          )
+                        : window.alert("삭제가 취소되었습니다");
+                    }}
+                  />
                 </div>
                 <p>{one_post?.comments[idx].comment}</p>
               </ComBox>
