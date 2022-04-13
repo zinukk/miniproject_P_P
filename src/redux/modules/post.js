@@ -117,16 +117,17 @@ const setpostDB = () => {
 
 const getOnePostDB = (pId) => {
   return function (dispatch, getState, { history }) {
-    // axios
-    //   .get(`http://54.180.90.59:8080/api/posts/${pId}`)
-    //   .then((res) => {
-    //     dispatch(getOnePost(res.data));
-    //   })
-    //   .catch((err) => {
-    //     console.log("err", err);
-    //   });
-    const data = { ...initialPost };
-    dispatch(getOnePost(data));
+    axios
+      .get(`http://54.180.90.59:8080/api/posts/${pId}`)
+      .then((res) => {
+        dispatch(getOnePost(res.data));
+        console.log(res.data.comments[0].comment);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+    // const data = { ...initialPost };
+    // dispatch(getOnePost(data));
   };
 };
 

@@ -84,8 +84,8 @@ export default handleActions(
   {
     [ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        //   draft.comments.shift(action.payload.content);
-        //unshift 는 최신이 맨앞에, shift는 최신이 맨 뒤에 배치, 이렇게하면 댓글달자마자 디테일페이지 가도 에러없음
+        draft.comments.shift(action.payload.content);
+        // unshift 는 최신이 맨앞에, shift는 최신이 맨 뒤에 배치, 이렇게하면 댓글달자마자 디테일페이지 가도 에러없음
       }),
 
     [SET_COMMENT]: (state, action) =>
