@@ -43,7 +43,7 @@ const DePost = (props) => {
               is_edit
               _onClick={() => {
                 history.push({
-                  pathname: `write/${postId}`,
+                  pathname: `/detail/write/${postId}`,
                   state: { one_post },
                 });
               }}

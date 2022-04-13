@@ -38,7 +38,7 @@ const CommentList = (props) => {
       {one_post?.comments.map((c, idx) => {
         // return <CommentItem key={idx} {...c} />;
         return (
-          <Grid>
+          <Grid key={idx}>
             <p>{one_post?.createdAt}</p>
             <div>
               <ComPro>
