@@ -33,7 +33,7 @@ const CommentList = (props) => {
 
   return (
     <React.Fragment>
-      {one_post?.comments.map((c, idx) => {
+      {one_post?.comments?.map((c, idx) => {
         // return <CommentItem key={idx} {...c} />;
         return (
           <Grid key={idx}>

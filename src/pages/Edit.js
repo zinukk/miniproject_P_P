@@ -8,9 +8,15 @@ import moment from "moment";
 import axios from "axios";
 import { history } from "../redux/configStore";
 import imageCompression from "browser-image-compression";
+import { useLocation } from "react-router-dom";
 
-const Write = (props) => {
+const Edit = (props) => {
   const dispatch = useDispatch();
+  const locat = useLocation();
+
+  const postData = locat.state.one_post;
+
+  const pId = postData.postId;
 
   //useState
   const [title, setTitle] = useState("");
@@ -21,14 +27,10 @@ const Write = (props) => {
   // const createdAt = moment().format("YYYY-MM-DD hh:mm:ss");
   // const modifiedAt = moment().format("YYYY-MM-DD hh:mm:ss");
 
-  const data = { title, location, imageUrl, content };
-
-  console.log(imageUrl);
-
   // const post_value = locat.state.one_post;
 
-  const writeData = () => {
-    dispatch(postActions.sendWriteDataDB(data));
+  const editData = () => {
+    dispatch(postActions.editDataDB(title, location, imageUrl, content, pId));
   };
 
   //미리보기
@@ -54,10 +56,11 @@ const Write = (props) => {
         <TravelImg src="/image/write.png"></TravelImg>
         <FlexBox>
           <ImgBox>
-            <h2>사진을 업로드해주세요!</h2>
+            <h2>게시물을 수정해주세요!</h2>
             <UploadFileInput
               type="file"
               accept={"image/*"}
+              defaultValue={postData.imgUrl}
               onChange={(e) => {
                 encodeFileToBase64(e.target.files[0]);
                 setImageUrl(e.target.files[0]);
@@ -70,22 +73,22 @@ const Write = (props) => {
           <DataBox>
             <DataInput
               type="text"
-              placeholder="제목을 입력해주세요"
+              defaultValue={postData.title}
               onChange={(e) => {
                 setTitle(e.target.value);
               }}
-            />{" "}
+            />
             <br />
             <DataInput
               type="text"
-              placeholder="찍으신 위치를 입력해주세요"
+              defaultValue={postData.location}
               onChange={(e) => {
                 setLocation(e.target.value);
               }}
             />{" "}
             <br />
             <TextArea
-              placeholder="내용을 입력해주세요"
+              defaultValue={postData.content}
               onChange={(e) => {
                 setContent(e.target.value);
               }}
@@ -93,10 +96,10 @@ const Write = (props) => {
             <br />
             <DataButton
               onClick={() => {
-                writeData();
+                editData();
               }}
             >
-              저장하기
+              게시물 수정
             </DataButton>
           </DataBox>
         </FlexBox>
@@ -190,4 +193,4 @@ const FlexBox = styled.div`
   padding: 0 20px;
 `;
 
-export default Write;
+export default Edit;

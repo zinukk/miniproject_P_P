@@ -15,7 +15,7 @@ const Detail = (props) => {
 
   React.useEffect(() => {
     // dispatch(comActions.setcommentDB(postId));
-    dispatch(postActions.getOnePostDB());
+    dispatch(postActions.getOnePostDB(postId));
   }, []);
 
   return (

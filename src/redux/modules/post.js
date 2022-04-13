@@ -16,6 +16,10 @@ const GET_ONE_POST = "GET_ONE_POST";
 // const addPost = createAction(ADD_POST, (post_list) => ({ post_list }));
 const setPost = createAction(SET_POST, (post_list) => ({ post_list }));
 const getOnePost = createAction(GET_ONE_POST, (one_post) => ({ one_post }));
+const editPost = createAction(EDIT_POST, (post_id, post) => ({
+  post_id,
+  post,
+}));
 
 // 초기값
 const initialState = {};
@@ -115,19 +119,40 @@ const setpostDB = () => {
   };
 };
 
-const getOnePostDB = (pId) => {
+const getOnePostDB = (pid) => {
   return function (dispatch, getState, { history }) {
     axios
-      .get(`http://54.180.90.59:8080/api/posts/${pId}`)
+      .get(`http://54.180.90.59:8080/api/posts/${pid}`)
       .then((res) => {
         dispatch(getOnePost(res.data));
-        console.log(res.data.comments[0].comment);
+        // console.log(res.data);
       })
       .catch((err) => {
-        console.log("err", err);
+        console.log("err", err.response);
       });
     // const data = { ...initialPost };
     // dispatch(getOnePost(data));
+  };
+};
+
+const editDataDB = (title, location, imageUrl, content, pId) => {
+  return function (dispatch, getState, { history }) {
+    axios
+      .put(`http://54.180.90.59:8080/api/posts/${pId}`, {
+        title: title,
+        location: location,
+        content: content,
+        imageUrl: null,
+      })
+      .then((res) => {
+        dispatch(getOnePost(res.data));
+        window.alert("수정을 성공했습니다!");
+        history.push("/");
+        // history.push(`detail/${pId}`);
+      })
+      .catch((err) => {
+        console.log("err", err.response);
+      });
   };
 };
 
@@ -147,6 +172,11 @@ export default handleActions(
         draft.one_post = action.payload.one_post;
         console.log(action.payload.one_post);
       }),
+    // [EDIT_POST]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     draft.one_post = action.payload.one_post;
+    //     console.log(action.payload.one_post);
+    //   }),
   },
   initialState
 );
@@ -157,6 +187,7 @@ const actionCreators = {
   getOnePostDB,
   getOnePost,
   setPost,
+  editDataDB,
 };
 
 export { actionCreators };
