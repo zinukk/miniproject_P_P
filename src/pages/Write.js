@@ -9,7 +9,7 @@ import axios from "axios";
 import { history } from "../redux/configStore";
 import imageCompression from "browser-image-compression";
 
-const Write = () => {
+const Write = (props) => {
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [imageSrc, setImageSrc] = useState("");
@@ -65,7 +65,7 @@ const Write = () => {
     <div>
       <Header></Header>
       <Container>
-        <TravelImg src="image/write.png"></TravelImg>
+        <TravelImg src="/image/write.png"></TravelImg>
         <FlexBox>
           <ImgBox>
             <h2>사진을 업로드해주세요!</h2>
