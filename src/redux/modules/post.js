@@ -110,7 +110,7 @@ const setpostDB = () => {
         dispatch(setPost(post_list));
       })
       .catch((err) => {
-        console.log("err", err);
+        console.log("err", err.response);
       });
   };
 };

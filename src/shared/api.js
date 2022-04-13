@@ -10,7 +10,7 @@ const api = axios.create({
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json,",
-    Authorization: token,
+  //  Authorization: token,
   },
 });
 //사진업로드부분

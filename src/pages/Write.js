@@ -23,6 +23,8 @@ const Write = (props) => {
   // const createdAt = moment().format("YYYY-MM-DD hh:mm:ss");
   // const modifiedAt = moment().format("YYYY-MM-DD hh:mm:ss");
 
+  
+
   const data = { title, location, imageUrl, content };
 
   console.log(imageUrl);
@@ -51,9 +53,15 @@ const Write = (props) => {
     });
   };
 
+  //const one_post = useSelector((state) => state.post.one_post);
   const postId = props.match.params.postId;
+  //console.log(one_post,"나는 디테일 원포스트")
 
   const is_edit = postId ? true : false;
+
+  //let _post = is_edit ? one_post.find((p) => p.id === postId) : null;
+
+  //const [contents, setContents] = React.useState(_post ? _post.contents : "");
 
   const editData = () => {};
 

@@ -31,16 +31,16 @@ const loginDB = (userId, password) => {
     apis
     .login(userId, password)
       .then((res) => {
-        setCookie("token", res.data[1].token, 5);
-        //setCookie('token', res.data.token, 3);
-        localStorage.setItem("userId", res.data[0].userId);
-        dispatch(setUser({ userId: userId }));
-        history.goBack();
-        window.alert(
-          `${localStorage.getItem("nickname")}님 안녕하세요!`,
-          "P_P에 방문해주셔서 감사합니다!",
-          "success"
-        );
+        // setCookie("token", res.data[1].token, 5);
+        // //setCookie('token', res.data.token, 3);
+        // localStorage.setItem("userId", res.data[0].userId);
+        // dispatch(setUser({ userId: userId }));
+        // history.goBack();
+        // window.alert(
+        //   `${localStorage.getItem("nickname")}님 안녕하세요!`,
+        //   "P_P에 방문해주셔서 감사합니다!",
+        //   "success"
+        // );
       })
       .catch((err) => {
         window.alert("아이디 혹은 비밀번호가 일치하지 않습니다");
@@ -57,7 +57,7 @@ const signupDB = (userId, nickname,password, passwordCheck,email) => {
       history.replace('/login');
       console.log(res)
   }).catch((err)=>{
-    console.log('나는회원가입err다',err)
+    console.log('나는회원가입err다',err.response)
   });
   };
 };
