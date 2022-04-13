@@ -54,8 +54,9 @@ const Login = (props) => {
                     <H1>🏝P_P🏝에 오신 것을 환영합니다.</H1>
                     <LoginBox>
                         <h2>로그인(LOGIN)</h2>
-                        <div> 
-                            <form action="http://54.180.90.59:8080/api/login" method="POST">
+                        <div>
+                            {/* <form action="http://54.180.90.59:8080/api/login" method="POST"> */}
+                            <form>
                                 <input type="text" name="userId" id="userId" placeholder="아이디를 입력해주세요.🏝" onChange={(e)=>{
                                     setUserId(e.target.value);
                                 }} />
@@ -63,9 +64,9 @@ const Login = (props) => {
                                     setPassword(e.target.value);
                                 }}
                                 placeholder="비밀번호를 입력해주세요.🏝" />
-                                <LogBtn onClick={login} type="submit">Login</LogBtn>
+                                {/* <LogBtn onClick={login} type="submit">Login</LogBtn> */}
                            </form>
-                            {/* <LogBtn onClick={login} type="submit">Login</LogBtn> */}
+                            <LogBtn onClick={login}>Login</LogBtn>
                             <Gogo onClick={()=>{
                                 history.push('/signup')
                             }

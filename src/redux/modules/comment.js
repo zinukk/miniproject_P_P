@@ -21,7 +21,7 @@ const deleteComment = createAction(DELETE_COMMENT, (id) => ({
 }));
 
 const initialState = {
-  list: [
+  comments: [
     {
       commentId: "5fas4f5",
       nickname: "유쨩",
@@ -84,13 +84,13 @@ export default handleActions(
   {
     [ADD_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        //   draft.list.shift(action.payload.content);
+        //   draft.comments.shift(action.payload.content);
         //unshift 는 최신이 맨앞에, shift는 최신이 맨 뒤에 배치, 이렇게하면 댓글달자마자 디테일페이지 가도 에러없음
       }),
 
     [SET_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = [...action.payload.list];
+        draft.comments = [...action.payload.comments];
       }),
     [DELETE_COMMENT]: (state, action) =>
       produce(state, (draft) => {

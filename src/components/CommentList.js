@@ -54,7 +54,7 @@ const CommentItem = (props) => {
         <p>{one_post?.createdAt}</p>
         <div>
           <ComPro>
-            <DeImg size="60" src={one_post?.imageUrl} />
+            <DeImg size="60" src={imageUrl} />
             <p>{one_post?.nickname}</p>
           </ComPro>
           <ComBox>
@@ -63,7 +63,7 @@ const CommentItem = (props) => {
               <DeBtn is_del />
             </div>} */}
             <div>
-              <DeBtn is_del onClick={delCom} />
+              <DeBtn is_del _onClick={delCom} />
             </div>
             <p>{one_post?.comment}</p>
           </ComBox>
