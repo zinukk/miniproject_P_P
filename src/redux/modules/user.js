@@ -31,20 +31,18 @@ const loginDB = (username, password) => {
     apis
     .login(username, password)
       .then((res) => {
-        setCookie("token", res.data[1].token, 5);
+        console.log(res.data,'나는 로그인 res.data')
+        console.log(res.data[0].username,'나는 로그인 res.data[0].username')
+       /*  setCookie("token", res.data[1].token, 5);
         //setCookie('token', res.data.token, 3);
         localStorage.setItem("username", res.data[0].username);
         dispatch(setUser({ username: username }));
-        history.goBack();
-        window.alert(
-          `${localStorage.getItem("nickname")}님 안녕하세요!`,
-          "P_P에 방문해주셔서 감사합니다!",
-          "success"
-        );
+        history.push('/');
+        window.alert(`${localStorage.getItem("nickname")}님 안녕하세요!`); */
       })
       .catch((err) => {
         window.alert("아이디 혹은 비밀번호가 일치하지 않습니다");
-        console.log(err, '나는 로그인 에러닷!!!');
+        console.log(err.response, '나는 로그인 에러닷!!!');
         //history.replace('/login');
       });
   };
@@ -57,7 +55,7 @@ const signupDB = (userId, nickname,password, passwordCheck,email) => {
       history.replace('/login');
       console.log(res)
   }).catch((err)=>{
-    console.log('나는회원가입err다',err)
+    console.log('나는회원가입err다',err.response)
   });
   };
 };
@@ -88,7 +86,7 @@ const checkUserDB = () => {
               dispatch(setUser(username,nickname));
           })
           .catch(err=>{
-              console.log('error:',err);
+              console.log('나는 체크유저 error:',err.response);
           })
       }else{
           dispatch(logOut())
