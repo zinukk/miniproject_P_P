@@ -30,14 +30,18 @@ const loginDB = (username, password) => {
     apis
       .login(username, password)
       .then((res) => {
-        // console.log(res.data, "나는 로그인 res.data");
-        // console.log(res.data[0].username, "나는 로그인 res.data[0].username");
-        setCookie("token", res.data[1].token, 5);
-        //setCookie('token', res.data.token, 3);
-        localStorage.setItem("username", res.data[0].username);
-        dispatch(setUser({ username: username }));
+        console.log(username);
+        console.log(password);
+        console.log(res.data, "로그인 성공!");
         history.push("/");
-        window.alert(`${localStorage.getItem("nickname")}님 안녕하세요!`);
+
+        // console.log(res.data[0].username, "나는 로그인 res.data[0].username");
+        // setCookie("token", res.data[1].token, 5);
+        // //setCookie('token', res.data.token, 3);
+        // localStorage.setItem("username", res.data[0].username);
+        // dispatch(setUser({ username: username }));
+        // history.push("/");
+        // window.alert(`${localStorage.getItem("nickname")}님 안녕하세요!`);
       })
       .catch((err) => {
         window.alert("아이디 혹은 비밀번호가 일치하지 않습니다");
@@ -72,6 +76,14 @@ const logincheckDB = () => {
     } else {
       dispatch(logOut());
     }
+  };
+};
+
+const asd = () => {
+  return function (dispatch, getState, { history }) {
+    axios.get("http://54.180.90.59:8080/user/loginCheck").then((res) => {
+      console.log(res.data);
+    });
   };
 };
 
@@ -145,6 +157,7 @@ const actionCreators = {
   logoutDB,
   setUser,
   checkUserDB,
+  asd,
 };
 
 export { actionCreators };

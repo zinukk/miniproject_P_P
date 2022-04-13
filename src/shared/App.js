@@ -10,12 +10,14 @@ import { ConnectedRouter } from "connected-react-router";
 import { history } from "../redux/configStore";
 import { useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
+import { actionCreators as userActions } from "../redux/modules/user";
 
 function App() {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     dispatch(postActions.setpostDB());
+    // dispatch(userActions.asd());
   }, []);
 
   return (
