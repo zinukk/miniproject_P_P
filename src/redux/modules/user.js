@@ -28,9 +28,8 @@ const initialState = {
 const loginDB = (userId, password) => {
   return function (dispatch, getState, { history }) {
     // 로그인 api
-    apis
-    .login(userId, password)
-      .then((res) => {
+    axios.post('http://localhost:3000/Data/user.json',{ userId: userId, password: password })
+    .then((res) => {
         setCookie("token", res.data[1].token, 5);
         //setCookie('token', res.data.token, 3);
         localStorage.setItem("userId", res.data[0].userId);
