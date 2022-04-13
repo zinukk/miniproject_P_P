@@ -14,7 +14,7 @@ const CHECK_USER ="CHECK_USER";
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
 const getUser = createAction(GET_USER, (user) => ({ user }));
 const setUser = createAction(SET_USER, (user) => ({ user }));
-const checkUser = createAction(CHECK_USER, (userId) => ({ userId }));
+const checkUser = createAction(CHECK_USER, (username) => ({ username }));
 
 // 초기값
 const initialState = {
@@ -25,16 +25,16 @@ const initialState = {
 //미들웨어
 
 //로그인 
-const loginDB = (userId, password) => {
+const loginDB = (username, password) => {
   return function (dispatch, getState, { history }) {
     // 로그인 api
     apis
-    .login(userId, password)
+    .login(username, password)
       .then((res) => {
         setCookie("token", res.data[1].token, 5);
         //setCookie('token', res.data.token, 3);
-        localStorage.setItem("userId", res.data[0].userId);
-        dispatch(setUser({ userId: userId }));
+        localStorage.setItem("username", res.data[0].username);
+        dispatch(setUser({ username: username }));
         history.goBack();
         window.alert(
           `${localStorage.getItem("nickname")}님 안녕하세요!`,
@@ -65,10 +65,10 @@ const signupDB = (userId, nickname,password, passwordCheck,email) => {
 //로그인 여부 확인 기능
 const logincheckDB = () => {
   return function (dispatch, getState, { history }) {
-    const userId = localStorage.getItem("userId");
+    const username = localStorage.getItem("username");
     const tokenCheck = document.cookie;
     if (tokenCheck) {
-      dispatch(setUser({ userId: userId }));
+      dispatch(setUser({ username: username }));
     } else {
       dispatch(logOut());
     }
@@ -80,7 +80,7 @@ const logoutDB = () => {
   return function (dispatch, getState, { history }) {
     return async function (dispatch, getState, { history }) {
       await deleteCookie("token");
-      localStorage.removeItem("userId");
+      localStorage.removeItem("username");
       dispatch(logOut());
       history.push("/login");
     };
@@ -100,7 +100,7 @@ export default handleActions(
       produce(state, (draft) => {
         deleteCookie("is_login");
         sessionStorage.removeItem("token");
-        sessionStorage.removeItem("useId");
+        sessionStorage.removeItem("username");
         window.sessionStorage.clear();
         draft.user = null;
         draft.is_login = false;

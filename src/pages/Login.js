@@ -14,13 +14,13 @@ import { actionCreators as userActions } from '../redux/modules/user';
 const Login = (props) => {
     const dispatch=useDispatch();
 
-    const [userId,setUserId]=useState('');
+    const [username,setusername]=useState('');
     const [password,setPassword]=useState('');
     //세션 체크
     const is_session = sessionStorage.getItem("token");
 
     const login = () => {
-        if(userId===""){
+        if(username===""){
             window.alert('아이디를 입력해주시죠?🥲');
             return;
         };
@@ -29,7 +29,7 @@ const Login = (props) => {
             return;
         };
         
-        if(!userIdCheck(userId)){
+        if(!userIdCheck(username)){
             window.alert('아이디는 영문, 숫자로만 입력해주세요.🥲');
             return;
         }
@@ -37,7 +37,7 @@ const Login = (props) => {
         // setCookie('userId',"uu",2)
         // setCookie('password',"1234",2)
         // history.push('/')
-        dispatch(userActions.loginDB(userId,password));
+        dispatch(userActions.loginDB(username,password));
 
       };
       //세션이 있다면, 바로 메인페이지로 한번만 실행
@@ -57,8 +57,8 @@ const Login = (props) => {
                         <div>
                             {/* <form action="http://54.180.90.59:8080/api/login" method="POST"> */}
                             <form>
-                                <input type="text" name="userId" id="userId" placeholder="아이디를 입력해주세요.🏝" onChange={(e)=>{
-                                    setUserId(e.target.value);
+                                <input type="text" name="username" id="username" placeholder="아이디를 입력해주세요.🏝" onChange={(e)=>{
+                                    setusername(e.target.value);
                                 }} />
                                 <input type="password" name="password" id="password" autoComplete="on" onChange={(e)=>{
                                     setPassword(e.target.value);
