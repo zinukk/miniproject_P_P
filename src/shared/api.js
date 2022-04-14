@@ -21,6 +21,16 @@ const instance = axios.create({
     accept: "application/json,",
     // Authorization: token,
   },
+
+  
+});
+
+const instances = axios.create({
+  baseURL: 'http://54.180.90.59:8080',
+  headers: {
+    "content-type": "application/x-www-form-urlencoded",
+    accept: "application/json,",
+  },
 });
 
 export const apis = {
@@ -37,7 +47,7 @@ export const apis = {
 
   //로그인
   login: (username, password) =>
-    api.post("/api/login", { username: username, password: password }),
+  instances.post("/api/login", { username: username, password: password }),
 
   //로그인 체크
   userCheck: () => api.get("/user/loginCheck"),
