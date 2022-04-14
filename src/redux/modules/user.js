@@ -8,18 +8,15 @@ import { deleteCookie, getCookie, setCookie } from "../../shared/Cookie";
 const LOG_OUT = "LOG_OUT";
 const GET_USER = "GET_USER";
 const SET_USER = "SET_USER";
-const CHECK_USER = "CHECK_USER";
 
 // 액션 크리에이터
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
 const getUser = createAction(GET_USER, (user) => ({ user }));
 const setUser = createAction(SET_USER, (user) => ({ user }));
-const checkUser = createAction(SET_USER, (user) => ({ user }));
 
 // 초기값
 const initialState = {
-  user: {},
-  is_login: false,
+
 };
 //미들웨어
 
@@ -30,17 +27,14 @@ const loginDB = (username, password) => {
     apis
       .login(username, password)
       .then((res) => {
-        console.log(username);
-        console.log(password);
-        console.log(res.data, "로그인 성공!");
-        history.push("/");
+        const token = res.headers.authorization.split(" ")[1];
+        console.log(res, "로그인 성공!");
+        sessionStorage.setItem('TT',token);
+        const username = JSON.parse(atob(token.split(".")[1])).USER_NAME; 
+        //console.log(username)
 
-        // console.log(res.data[0].username, "나는 로그인 res.data[0].username");
-        // setCookie("token", res.data[1].token, 5);
-        // //setCookie('token', res.data.token, 3);
-        // localStorage.setItem("username", res.data[0].username);
-        // dispatch(setUser({ username: username }));
-        // history.push("/");
+        dispatch(setUser({ username: username }));
+        history.push("/");
         // window.alert(`${localStorage.getItem("nickname")}님 안녕하세요!`);
       })
       .catch((err) => {
@@ -66,58 +60,47 @@ const signupDB = (username, nickname, password, passwordCheck, email) => {
   };
 };
 
-//로그인 여부 확인 기능
-const logincheckDB = () => {
-  return function (dispatch, getState, { history }) {
-    const username = localStorage.getItem("username");
-    const tokenCheck = document.cookie;
-    if (tokenCheck) {
-      dispatch(setUser({ username: username }));
-    } else {
-      dispatch(logOut());
-    }
-  };
-};
-
-const asd = () => {
-  return function (dispatch, getState, { history }) {
-    axios.get("http://54.180.90.59:8080/user/loginCheck").then((res) => {
-      console.log(res.data);
-    });
-  };
-};
 
 //유저 정보
-const checkUserDB = () => {
+const checkUserDB = (token) => {
   return function (dispatch, getState, { history }) {
-    let token = document.cookie.split("=")[1];
+    
+    axios.post(
+      `http://54.180.90.59:8080/user/loginCheck`,{
 
-    if (token) {
-      apis
-        .usercheck()
-        .then((res) => {
-          let username = res.data.username;
-          let nickname = res.data.nickname;
-          dispatch(setUser(username, nickname));
-        })
-        .catch((err) => {
-          console.log("나는 체크유저 error:", err.response);
-        });
-    } else {
-      dispatch(logOut());
-    }
+      },{
+        headers: { Authorization: `Bearer ${token}`, },
+      }
+      ).then((res)=>{
+        console.log(res,"체크")
+        dispatch(
+          setUser(
+           { nickname:res.data.nickname,
+          is_login:res.data.is_login}
+          )
+        );
+      }).catch((err) => {
+        console.log("체크에러다!!!!", err.response);
+      }); 
   };
 };
 
 // 로그아웃토큰삭제
 const logoutDB = () => {
   return function (dispatch, getState, { history }) {
-    return async function (dispatch, getState, { history }) {
-      await deleteCookie("token");
-      localStorage.removeItem("username");
-      dispatch(logOut());
-      history.push("/login");
-    };
+   
+      
+      apis.logout()
+      .then((res)=>{
+        //console.log(res)
+        sessionStorage.removeItem("TT");
+        dispatch(logOut());
+        history.push("/login");
+      }).catch((e)=>{
+        console.log('로그아웃 에러닷',e)
+      })
+      
+    
   };
 };
 
@@ -126,9 +109,8 @@ export default handleActions(
   {
     [SET_USER]: (state, action) =>
       produce(state, (draft) => {
-        setCookie("is_login", "SUCCESS");
         draft.user = action.payload.user;
-        draft.is_login = true;
+
       }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
@@ -153,11 +135,9 @@ const actionCreators = {
   getUser,
   signupDB,
   loginDB,
-  logincheckDB,
   logoutDB,
   setUser,
   checkUserDB,
-  asd,
 };
 
 export { actionCreators };

@@ -10,26 +10,25 @@ import { getCookie, deleteCookie } from "../shared/Cookie";
 const Header = (props) => {
   const dispatch = useDispatch();
   //데이터 주고 받을 때 주석 처리
-  const [is_login, setIsLogin] = React.useState(false);
+ // const [is_login, setIsLogin] = React.useState(true);
+ const is_login = useSelector((store) => store?.user?.user?.is_login);
+ const nickname = useSelector((store) => store?.user?.user?.nickname);
+
+ console.log(typeof is_login);
+
 
   React.useEffect(() => {
-    let cookie = getCookie("userName");
-    console.log(cookie, "나는 헤더에 있는 쿠키다!!!!");
-
-    if (cookie) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
+    dispatch(userActions.checkUserDB(sessionStorage.getItem('TT')))
   }, []);
   //데이터 주고 받을 때 주석 풀기
-  //const is_login = useSelector((store) => store.users.is_login);
+  
 
   const logout = () => {
+    console.log('로그아웃버튼')
     dispatch(userActions.logoutDB());
   };
 
-  if (is_login === true) {
+  if (is_login === "true") {
     return (
       <React.Fragment>
         <HeaderBox>
@@ -43,7 +42,7 @@ const Header = (props) => {
           <FlexDiv>
             <HeaderUserButton>
               {" "}
-              {localStorage.getItem("nickname")}님, 안녕하세요!
+              {nickname}님, 안녕하세요!
             </HeaderUserButton>
             <HeaderButton onClick={logout}>Logout</HeaderButton>
           </FlexDiv>
