@@ -73,16 +73,25 @@ const addCommentDB = (comment, postId, token) => {
   };
 };
 
-const delcommentDB = (commentId, pId) => {
+const delcommentDB = (commentId, pId,token) => {
   return function (dispatch, getState, { history }) {
-    apis
-      .delcom(commentId)
-      .then(() => {
-        dispatch(postActions.getOnePostDB(pId));
+    axios
+    .delete(
+      `http://54.180.90.59:8080/api/comments/${commentId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "content-type": "application/json;charset=UTF-8",
+          accept: "application/json,",
+
+        },
+      }
+    ).then(() => {
+        dispatch(postActions.deleteComment(pId));
         history.push(`/detail/${pId}`);
       })
       .catch((err) => {
-        console.log("나는 댓글삭제err", err);
+        console.log("나는 댓글삭제err", err.response);
       });
   };
 };
@@ -101,12 +110,9 @@ export default handleActions(
       }),
     [DELETE_COMMENT]: (state, action) =>
       produce(state, (draft) => {
-        //   let new_comment_list = draft.list.filter((v) => {
-        //     if(v.commentId !== action.payload.commentId){
-        //       return v
-        //     }
-        //   })
-        //   draft.list = new_comment_list;
+          return{ ...state}
+    
+         
       }),
   },
   initialState
