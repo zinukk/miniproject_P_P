@@ -21,12 +21,14 @@ const Write = (props) => {
   // const createdAt = moment().format("YYYY-MM-DD hh:mm:ss");
   // const modifiedAt = moment().format("YYYY-MM-DD hh:mm:ss");
 
+  const token = sessionStorage.getItem("TT");
+
   const data = { title, location, imageUrl, content };
 
   // const post_value = locat.state.one_post;
 
   const writeData = () => {
-    dispatch(postActions.sendWriteDataDB(data));
+    dispatch(postActions.sendWriteDataDB(data, token));
   };
 
   console.log(imageUrl);

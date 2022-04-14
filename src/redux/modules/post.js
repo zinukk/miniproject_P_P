@@ -64,26 +64,29 @@ const initialPost = {
 //   };
 // };
 
-const sendWriteDataDB = (data) => {
+const sendWriteDataDB = (data, token) => {
   return function (dispatch, getState, { history }) {
     const file = new FormData();
 
     file.append("title", data.title);
     file.append("content", data.content);
     file.append("location", data.location);
-    // file.append("imageUrl", data.imageUrl);
-    // file.append(
+    file.append("file", data.imageUrl);
+    // // // file.append(
     //   "imageUrl",
     //   new Blob([JSON.stringify(data.imageUrl)], { type: "application/json" })
     // );
 
     axios
       .post(
-        "http://54.180.90.59:8080/api/posts",
+        `http://54.180.90.59:8080/api/posts`,
         file,
         {
           headers: {
-            "content-type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+            "Content-Type":
+              "multipart/form-data; boundary=----WebKitFormBoundaryfApYSlK1ODwmeKW3",
+
             // accept: "application/json,",
             // Authorization: token,
           },
@@ -92,12 +95,12 @@ const sendWriteDataDB = (data) => {
         //   title: data.title,
         //   location: data.location,
         //   content: data.content,
-        //   // imageUrl: data.imageUrl,
+        //   file: data.imageUrl,
         // }
       )
       .then((res) => {
         dispatch(setpostDB());
-        console.log(res.data);
+        console.log(res);
         history.push("/");
       })
       .catch((err) => {
