@@ -1,8 +1,13 @@
 import axios from "axios";
 
 //document에 쿠키가 잇는지 확인 , 쿠키가 없다면 instance 헤더에는 토큰값이 null로 지정
-const tokenCheck = document.cookie;
-const token = tokenCheck.split("=")[1];
+
+
+
+export const setClient = (token) => { 
+  const client = axios.create({ baseURL: 'http://54.180.90.59:8080', })
+  client.defaults.headers.common['Authorization'] = `Bearer ${token}` 
+}
 
 // export default instance;
 const api = axios.create({
@@ -47,10 +52,10 @@ export const apis = {
 
   //로그인
   login: (username, password) =>
-  instances.post("/api/login", { username: username, password: password }),
+  api.post("/api/login", { username: username, password: password }),
 
   //로그인 체크
-  userCheck: () => api.get("/user/loginCheck"),
+  userCheck: () => api.post("/user/loginCheck"),
   //아이디 중복확인
   // checkUserId: (userId) =>
   //   api.post("/api/user/checkid", {
@@ -66,8 +71,8 @@ export const apis = {
       passwordCheck: passwordCheck,
       email: email,
     }),
-  // 로그아웃 요청
-  //logout: ()=> api.post('/api/logout'),
+  //로그아웃 요청
+  logout: ()=> api.get('/api/logout'),
 
   // 포스트 삭제
   delPost: (postId) => api.delete(`/api/posts/${postId}`),

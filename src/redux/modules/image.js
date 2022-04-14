@@ -1,18 +1,18 @@
 import { createAction,handleActions } from "redux-actions";
 import {produce} from "immer";
 
-
+import { storage } from "../../shared/firebase";
 
 const UPLOADING = "UPLOADING";
-const UPLOAD_IMG ="UPLOAD_IMG"; //업로드 액션
+const UPLOAD_IMG ="UPLOAD_IMG";
 const SET_PRE ="SET_PRE";
 
 const uploading =createAction(UPLOADING,(uploading)=>({uploading}));
-const uploadImage =createAction(UPLOAD_IMG,(imageUrl)=>({imageUrl}));
+const uploadImage =createAction(UPLOAD_IMG,(image_url)=>({image_url}));
 const setPreview =createAction(SET_PRE,(preview)=>({preview}));
 
 const initialState={
-    imageUrl: '',
+    image_url: '',
     uploading:false,
     preview:null,
 }
@@ -20,17 +20,17 @@ const initialState={
 const uploadImageFB =(image)=>{
     return function(dispatch,getState,{history}){
 
-        // dispatch(uploading(true));
-        // const _upload =storage.ref( `images/${image.name}`).put(image);
+        dispatch(uploading(true));
+        const _upload =storage.ref( `images/${image.name}`).put(image);
 
-        // _upload.then((snapshot)=>{
-        //     console.log(snapshot);
-        //     snapshot.ref.getDownloadURL().then((url)=>{
-        //         dispatch(uploadImage(url));
-        //     }).catch(err=>{
-        //         dispatch(uploading(false));
-        //     })
-        // })
+        _upload.then((snapshot)=>{
+            console.log(snapshot);
+            snapshot.ref.getDownloadURL().then((url)=>{
+                dispatch(uploadImage(url));
+            }).catch(err=>{
+                dispatch(uploading(false));
+            })
+        })
 
     }; //return
 };//uploadImageFB
