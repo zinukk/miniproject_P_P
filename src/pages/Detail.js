@@ -13,6 +13,8 @@ const Detail = (props) => {
   //const is_login = useSelector((state)=> state.user.is_login);
   const postId = props.match.params.postId;
 
+  const token = sessionStorage.getItem("TT");
+
   React.useEffect(() => {
     // dispatch(comActions.setcommentDB(postId));
     dispatch(postActions.getOnePostDB(postId));

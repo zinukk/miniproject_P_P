@@ -14,18 +14,8 @@ const CommentList = (props) => {
   const one_post = useSelector((state) => state.post.one_post);
 
   const is_me = nickname === _user_nickname ? true : false;
-  //awf
-  //   const comment_list = useSelector((state) => state.comment.list);
-  //   const { postId } = props;
 
-  //   React.useEffect(() => {
-  //     if (!comment_list[postId]) {
-  //       //dispatch(commentActions.getCommentFB(postId));
-  //     }
-  //   }, []);
-  //   if (!comment_list[postId] || !postId) {
-  //     return null;
-  //   }
+  const token = sessionStorage.getItem("TT");
 
   return (
     <React.Fragment>
@@ -37,7 +27,7 @@ const CommentList = (props) => {
             <div>
               <ComPro>
                 <DeImg size="60" src={imageUrl} />
-                <p>{one_post?.nickname}</p>
+                <p>{one_post?.comments[idx].nickname}</p>
               </ComPro>
               <ComBox>
                 {/* {is_me && 
@@ -52,7 +42,8 @@ const CommentList = (props) => {
                         ? dispatch(
                             comActions.delcommentDB(
                               one_post?.comments[idx].commentId,
-                              postId
+                              postId,
+                              token
                             )
                           )
                         : window.alert("삭제가 취소되었습니다");

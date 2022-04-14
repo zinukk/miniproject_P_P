@@ -4,6 +4,7 @@ import DeBtn from "./DeBtn";
 import CommentList from "./CommentList";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as commentActions } from "../redux/modules/comment";
+import { history } from "../redux/configStore";
 
 const Comment = (props) => {
   const { postId } = props;
@@ -11,40 +12,73 @@ const Comment = (props) => {
   //const comment_list = useSelector((state) => state.comment.list);
 
   const [comment, setComment] = useState("");
+  const is_login = useSelector((store) => store?.user?.user?.is_login);
+
+  const token = sessionStorage.getItem("TT");
 
   const addCom = () => {
     if (comment.length === 0) {
       window.alert("아무내용도 없네요? 내용을 적어주세요!!");
       return;
     }
-    dispatch(commentActions.addCommentDB(comment, postId));
+    dispatch(commentActions.addCommentDB(comment, postId, token));
     setComment("");
   };
 
-  return (
-    <React.Fragment>
-      <Outter>
-        <ConInput>
-          <form>
-            <input
-              type="text"
-              value={comment}
-              onChange={(e) => {
-                setComment(e.target.value);
+  if (is_login === "true") {
+    return (
+      <React.Fragment>
+        <Outter>
+          <ConInput>
+            <form>
+              <input
+                type="text"
+                value={comment}
+                onChange={(e) => {
+                  setComment(e.target.value);
+                }}
+              />
+            </form>
+            <DeBtn
+              width="15%"
+              text="댓글 남기기!"
+              height="100px"
+              _onClick={addCom}
+            />
+          </ConInput>
+          <CommentList postId={postId} />
+        </Outter>
+      </React.Fragment>
+    );
+  } else {
+    return (
+      <React.Fragment>
+        <Outter>
+          <ConInput>
+            <form>
+              <input
+                type="text"
+                value={comment}
+                onChange={(e) => {
+                  setComment(e.target.value);
+                }}
+              />
+            </form>
+            <DeBtn
+              width="15%"
+              text="댓글 남기기!"
+              height="100px"
+              _onClick={() => {
+                window.alert("로그인을 먼저 해주세요!");
+                history.push("/login");
               }}
             />
-          </form>
-          <DeBtn
-            width="15%"
-            text="댓글 남기기!"
-            height="100px"
-            _onClick={addCom}
-          />
-        </ConInput>
-        <CommentList postId={postId} />
-      </Outter>
-    </React.Fragment>
-  );
+          </ConInput>
+          <CommentList postId={postId} />
+        </Outter>
+      </React.Fragment>
+    );
+  }
 };
 
 const Outter = styled.div`

@@ -32,6 +32,7 @@ const Write = (props) => {
   };
 
   console.log(imageUrl);
+
   //미리보기
   const encodeFileToBase64 = (fileBlob) => {
     const reader = new FileReader();

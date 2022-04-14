@@ -4,6 +4,7 @@ import { actionCreators as postActions } from "./post";
 
 import moment from "moment";
 import { apis } from "../../shared/api";
+import axios from "axios";
 
 const ADD_COMMENT = "ADD_COMMENT";
 const SET_COMMENT = "SET_COMMENT";
@@ -43,21 +44,26 @@ const initialState = {
   ],
 };
 //미들웨어
-// const setcommentDB = (postId) => {
-//   return function(dispatch, getState, {history}){
-//       apis.getcom(postId)
-//       .then(res=>{
-//           dispatch(setComment(res.data))
-//       })
-//       .catch(err=>{
-//           console.log('나는 댓글 불러오기 err',err)
-//       })
-//   }
-// }
-const addCommentDB = (comment, postId) => {
+
+const addCommentDB = (comment, postId, token) => {
   return function (dispatch, getState, { history }) {
-    apis
-      .addcom(postId, comment)
+    axios
+      .post(
+        `http://54.180.90.59:8080/api/comments/${postId}`,
+        {
+          comment: comment,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "content-type": "application/json;charset=UTF-8",
+            accept: "application/json,",
+
+            // accept: "application/json,",
+            // Authorization: token,
+          },
+        }
+      )
       .then(() => {
         dispatch(postActions.getOnePostDB(postId));
       })

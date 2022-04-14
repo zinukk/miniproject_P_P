@@ -48,22 +48,6 @@ const initialPost = {
 };
 
 // 미들웨어
-// const addPostDB = (title, content, location, file) => {
-//   return function (dispatch, getState, { history }) {
-//     apis
-//       .addPost(title, content, location, file)
-//       .then((res) => {
-//         if (res.data === "게시글 작성이 완료되었습니다.") {
-//           alert(res.data);
-//           history.replace("/");
-//         } else {
-//           alert(res.data);
-//         }
-//       })
-//       .catch((e) => alert(e));
-//   };
-// };
-
 const sendWriteDataDB = (data, token) => {
   return function (dispatch, getState, { history }) {
     const file = new FormData();
@@ -72,32 +56,15 @@ const sendWriteDataDB = (data, token) => {
     file.append("content", data.content);
     file.append("location", data.location);
     file.append("file", data.imageUrl);
-    // // // file.append(
-    //   "imageUrl",
-    //   new Blob([JSON.stringify(data.imageUrl)], { type: "application/json" })
-    // );
 
     axios
-      .post(
-        `http://54.180.90.59:8080/api/posts`,
-        file,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type":
-              "multipart/form-data; boundary=----WebKitFormBoundaryfApYSlK1ODwmeKW3",
-
-            // accept: "application/json,",
-            // Authorization: token,
-          },
-        }
-        // {
-        //   title: data.title,
-        //   location: data.location,
-        //   content: data.content,
-        //   file: data.imageUrl,
-        // }
-      )
+      .post(`http://54.180.90.59:8080/api/posts`, file, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type":
+            "multipart/form-data; boundary=----WebKitFormBoundaryfApYSlK1ODwmeKW3",
+        },
+      })
       .then((res) => {
         dispatch(setpostDB());
         console.log(res);
@@ -129,20 +96,26 @@ const getOnePostDB = (pid) => {
       .get(`http://54.180.90.59:8080/api/posts/${pid}`)
       .then((res) => {
         dispatch(getOnePost(res.data));
-        // console.log(res.data);
       })
       .catch((err) => {
         console.log("err", err.response);
       });
-    // const data = { ...initialPost };
-    // dispatch(getOnePost(data));
   };
 };
 
-const delPostDB = (pId) => {
+const delPostDB = (pId, token) => {
   return function (dispatch, getState, { history }) {
     axios
-      .delete(`http://54.180.90.59:8080/api/posts/${pId}`)
+      .delete(`http://54.180.90.59:8080/api/posts/${pId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "content-type": "application/json;charset=UTF-8",
+          accept: "application/json,",
+
+          // accept: "application/json,",
+          // Authorization: token,
+        },
+      })
       .then((res) => {
         dispatch(setpostDB());
         console.log(res.data);
@@ -154,14 +127,22 @@ const delPostDB = (pId) => {
   };
 };
 
-const editDataDB = (title, location, imageUrl, content, pId) => {
+const editDataDB = (data, pId, token) => {
   return function (dispatch, getState, { history }) {
+    const file = new FormData();
+
+    file.append("title", data.title);
+    file.append("content", data.content);
+    file.append("location", data.location);
+    file.append("file", data.imageUrl);
+
     axios
-      .put(`http://54.180.90.59:8080/api/posts/${pId}`, {
-        title: title,
-        location: location,
-        content: content,
-        imageUrl: null,
+      .put(`http://54.180.90.59:8080/api/posts/${pId}`, file, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type":
+            "multipart/form-data; boundary=----WebKitFormBoundaryfApYSlK1ODwmeKW3",
+        },
       })
       .then((res) => {
         dispatch(setpostDB(res.data));
@@ -189,7 +170,7 @@ export default handleActions(
     [GET_ONE_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.one_post = action.payload.one_post;
-        console.log(action.payload.one_post);
+        // console.log(action.payload.one_post);
       }),
 
     [DEL_POST]: (state, action) =>

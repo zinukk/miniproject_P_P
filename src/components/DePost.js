@@ -14,6 +14,13 @@ const DePost = (props) => {
   const pId = props.postId;
 
   const one_post = useSelector((state) => state.post.one_post);
+  const nick = useSelector((store) => store?.user?.user?.nickname);
+
+  const token = sessionStorage.getItem("TT");
+
+  const is_me = nick == one_post?.nickname;
+
+  // const is_me = nickname == one_post?.nickname ? true : false
 
   React.useEffect(() => {
     dispatch(postActions.getOnePostDB(pId));
@@ -38,33 +45,30 @@ const DePost = (props) => {
             <p>위치 : {one_post?.location}</p>
             <p>{one_post?.createdAt}</p>
           </Grid>
-          <Grid>
-            <DeBtn
-              is_edit
-              _onClick={() => {
-                history.push({
-                  pathname: `/detail/write/${postId}`,
-                  state: { one_post },
-                });
-              }}
-            />
-            <DeBtn
-              is_del
-              _onClick={() => {
-                window.confirm("게시물을 삭제하시겠습니까?")
-                  ? dispatch(postActions.delPostDB(postId))
-                  : window.alert("삭제가 취소되었습니다");
-
-                // dispatch(postActions.delPostDB(postId));
-              }}
-            />
-          </Grid>
+          {is_me && (
+            <Grid>
+              <DeBtn
+                is_edit
+                _onClick={() => {
+                  history.push({
+                    pathname: `/detail/write/${postId}`,
+                    state: { one_post },
+                  });
+                }}
+              />
+              <DeBtn
+                is_del
+                _onClick={() => {
+                  window.confirm("게시물을 삭제하시겠습니까?")
+                    ? dispatch(postActions.delPostDB(postId, token))
+                    : window.alert("삭제가 취소되었습니다");
+                }}
+              />
+            </Grid>
+          )}
         </DeHeader>
         <DeGrid>
-          <DeImg
-            shape="rectangle"
-            src={one_post?.imageUrl}
-          />
+          <DeImg shape="rectangle" src={one_post?.imageUrl} />
 
           <Desc>
             {/* <p>{content}</p> */}

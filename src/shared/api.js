@@ -2,12 +2,10 @@ import axios from "axios";
 
 //document에 쿠키가 잇는지 확인 , 쿠키가 없다면 instance 헤더에는 토큰값이 null로 지정
 
-
-
-export const setClient = (token) => { 
-  const client = axios.create({ baseURL: 'http://54.180.90.59:8080', })
-  client.defaults.headers.common['Authorization'] = `Bearer ${token}` 
-}
+export const setClient = (token) => {
+  const client = axios.create({ baseURL: "http://54.180.90.59:8080" });
+  client.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+};
 
 // export default instance;
 const api = axios.create({
@@ -26,12 +24,10 @@ const instance = axios.create({
     accept: "application/json,",
     // Authorization: token,
   },
-
-  
 });
 
 const instances = axios.create({
-  baseURL: 'http://54.180.90.59:8080',
+  baseURL: "http://54.180.90.59:8080",
   headers: {
     "content-type": "application/x-www-form-urlencoded",
     accept: "application/json,",
@@ -52,7 +48,7 @@ export const apis = {
 
   //로그인
   login: (username, password) =>
-  api.post("/api/login", { username: username, password: password }),
+    api.post("/api/login", { username: username, password: password }),
 
   //로그인 체크
   userCheck: () => api.post("/user/loginCheck"),
@@ -72,7 +68,7 @@ export const apis = {
       email: email,
     }),
   //로그아웃 요청
-  logout: ()=> api.get('/api/logout'),
+  logout: () => api.get("/api/logout"),
 
   // 포스트 삭제
   delPost: (postId) => api.delete(`/api/posts/${postId}`),

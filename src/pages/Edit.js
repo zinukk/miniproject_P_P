@@ -14,6 +14,8 @@ const Edit = (props) => {
   const dispatch = useDispatch();
   const locat = useLocation();
 
+  const token = sessionStorage.getItem("TT");
+
   const postData = locat.state.one_post;
 
   const pId = postData.postId;
@@ -22,16 +24,20 @@ const Edit = (props) => {
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [imageSrc, setImageSrc] = useState("");
-  const [imageUrl, setImageUrl] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
   const [content, setContent] = useState("");
   // const createdAt = moment().format("YYYY-MM-DD hh:mm:ss");
   // const modifiedAt = moment().format("YYYY-MM-DD hh:mm:ss");
 
   // const post_value = locat.state.one_post;
 
+  const data = { title, location, imageUrl, content };
+
   const editData = () => {
-    dispatch(postActions.editDataDB(title, location, imageUrl, content, pId));
+    dispatch(postActions.editDataDB(data, pId, token));
   };
+
+  console.log(imageUrl);
 
   //미리보기
   const encodeFileToBase64 = (fileBlob) => {
@@ -43,7 +49,7 @@ const Edit = (props) => {
 
     return new Promise((resolve) => {
       reader.onload = () => {
-        setImageUrl(reader.result);
+        setImageSrc(reader.result);
         resolve();
       };
     });
@@ -124,8 +130,8 @@ const ImgBox = styled.div`
   height: 450px;
   margin: 25px 5px;
 
-  & > h2{
-    font-family:"Gugi";
+  & > h2 {
+    font-family: "Gugi";
   }
 `;
 const PreviewBox = styled.div`
