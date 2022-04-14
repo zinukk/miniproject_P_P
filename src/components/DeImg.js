@@ -43,7 +43,7 @@ const AspectInner = styled.div`
     overflow:hidden;
     background-image: url('${(props)=>props.src}');
     background-size:cover;
-    background-position: center bottom;
+    background-position: center;
 `;
 
 const ImageCircle =styled.div`

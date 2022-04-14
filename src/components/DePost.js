@@ -63,7 +63,7 @@ const DePost = (props) => {
         <DeGrid>
           <DeImg
             shape="rectangle"
-            src="https://velog.velcdn.com/images/ryurim0109/post/5432eec7-b7ea-4ca7-8315-e929e04c7a54/KakaoTalk_Photo_2022-04-09-10-15-54.jpeg"
+            src={one_post?.imageUrl}
           />
 
           <Desc>
