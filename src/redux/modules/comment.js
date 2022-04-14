@@ -86,8 +86,9 @@ const delcommentDB = (commentId, pId,token) => {
 
         },
       }
-    ).then(() => {
-        dispatch(postActions.deleteComment(pId));
+    ).then((res) => {
+      console.log(res)
+        dispatch(postActions.getOnePostDB(pId));
         history.push(`/detail/${pId}`);
       })
       .catch((err) => {
