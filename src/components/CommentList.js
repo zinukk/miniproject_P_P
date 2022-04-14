@@ -10,45 +10,42 @@ const CommentList = (props) => {
   const dispatch = useDispatch();
   const { commentId, comment, createdAt, nickname, imageUrl, id, postId, idx } =
     props;
-  let _user_nickname = useSelector((state) => state.user.nickname);
-  const one_post = useSelector((state) => state.post.one_post);
-
-  const is_me = nickname === _user_nickname ? true : false;
+  let _user_nickname = useSelector((state) => state?.user?.user?.nickname);
+  const one_post = useSelector((state) => state?.post?.one_post);
+ 
 
   const token = sessionStorage.getItem("TT");
 
   return (
     <React.Fragment>
       {one_post?.comments?.map((c, idx) => {
-        // return <CommentItem key={idx} {...c} />;
         return (
           <Grid key={idx}>
             <p>{one_post?.createdAt}</p>
             <div>
               <ComPro>
                 <DeImg size="60" src={imageUrl} />
-                <p>{one_post?.comments[idx].nickname}</p>
+                <p>{one_post?.comments[idx]?.user?.nickname}</p>
               </ComPro>
               <ComBox>
-                {/* {is_me && 
-            <div>
-              <DeBtn is_del />
-            </div>} */}
                 <div>
+                  {one_post?.comments[idx]?.user?.nickname===_user_nickname && 
                   <DeBtn
-                    is_del
-                    _onClick={() => {
-                      window.confirm("댓글을 삭제하시겠습니까?")
-                        ? dispatch(
-                            comActions.delcommentDB(
-                              one_post?.comments[idx].commentId,
-                              postId,
-                              token
-                            )
+                  is_del
+                  _onClick={() => {
+                    window.confirm("댓글을 삭제하시겠습니까?")
+                      ? dispatch(
+                          comActions.delcommentDB(
+                            one_post?.comments[idx].commentId,
+                            postId,
+                            token
                           )
-                        : window.alert("삭제가 취소되었습니다");
-                    }}
-                  />
+                        )
+                      : window.alert("삭제가 취소되었습니다");
+                  }}
+                />
+                  }
+                  
                 </div>
                 <p>{one_post?.comments[idx].comment}</p>
               </ComBox>
